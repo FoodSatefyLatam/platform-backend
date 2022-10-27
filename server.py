@@ -1,16 +1,19 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 
-import alimentos
+
 
 app = Flask(__name__)
 
+
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'contaminantes'
+app.config['MYSQL_PASSWORD'] = 'abcd.1234'
+app.config['MYSQL_DB'] = 'proyectocontaminantes'
 mysql = MySQL(app)
 
+import alimentos
 @app.route("/request_db", methods=["POST"])
 def request_db():
     min_age = 0

@@ -3,9 +3,9 @@ from flask import jsonify
 from __main__ import app, mysql
 
 @app.route("/request_alimentos")
-def request_db():
+def request_alimentos():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT especie FROM alimetos")
+    cur.execute("SELECT especie FROM alimento")
     #consulta
     alimentos = cur.fetchall()
-    return alimentos
+    return 'hola mundo'
