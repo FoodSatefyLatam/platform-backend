@@ -13,7 +13,7 @@ app.config['MYSQL_PASSWORD'] = 'abcd.1234'
 app.config['MYSQL_DB'] = 'proyectocontaminantes'
 mysql = MySQL(app)
 
-import alimentos
+import alimentos,calculadora
 @app.route("/request_db", methods=["POST"])
 def request_db():
     min_age = 0
