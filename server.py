@@ -1,5 +1,7 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+
+import alimentos
 
 app = Flask(__name__)
 
@@ -7,6 +9,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'password'
 app.config['MYSQL_DB'] = 'contaminantes'
+mysql = MySQL(app)
 
 @app.route("/request_db", methods=["POST"])
 def request_db():
