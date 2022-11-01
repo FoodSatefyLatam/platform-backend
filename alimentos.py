@@ -11,7 +11,4 @@ def request_alimentos():
     alimentos = cur.fetchall()
     for alimento in alimentos:
         lista_alimentos.append(alimento[0])
-    json_alimentos = [{
-        "alimentos": lista_alimentos
-    }]
-    return jsonify(json_alimentos)
+    return jsonify(lista_alimentos)

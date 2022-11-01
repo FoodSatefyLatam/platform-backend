@@ -2,7 +2,7 @@ from __main__ import app, mysql,request
 
 
 
-@app.route("/calculadora")
+@app.route("/calculadora", methods = ['POST'])
 def calculadora():
     try:
     
