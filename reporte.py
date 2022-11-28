@@ -15,9 +15,7 @@ def reporte():
     max_altura = 1000
     contaminantes = []
     alimentos = []
-    print(1)
     request_json = request.get_json()
-    print(1.1)
     if request_json.get("sexo"):
         sexo = request_json["sexo"]
     if request_json.get("min_age"):
@@ -31,19 +29,18 @@ def reporte():
     if request_json.get("min_altura"):
         min_altura = request_json["min_altura"]
     if request_json.get("max_altura"):
-        max_altura = request_json["max_altura"]            
-    print(2)
+        max_altura = request_json["max_altura"]
     if request_json.get("contaminantes"):
         for contaminante in request_json.get("contaminantes"):
             contaminantes.append(contaminante)
     if request_json.get("alimentos"):
         for alimento in request_json.get("alimentos"):
             alimentos.append(alimento)
-    print(3)
     for contaminante in contaminantes:
         print(contaminante)
         cur.execute("SELECT * FROM persona JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_alimento=alimento.id_alimento JOIN muestreo ON persona.id_region=muestreo.id_region JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[contaminante])
+        print(contaminante)
         reporte[contaminante] = cur.fetchall()
-    print(4)
+        print(contaminante)
     
     return jsonify(reporte)
