@@ -43,5 +43,5 @@ def reporte():
         print(contaminante)
         reporte[contaminante] = cur.fetchall()
         print(contaminante)
-    
+    print("hola")
     return jsonify(reporte)
