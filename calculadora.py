@@ -1,11 +1,8 @@
-from __main__ import app, mysql,request
-
-
+from __main__ import app, mysql, request
 
 @app.route("/calculadora", methods = ['POST'])
 def calculadora():
     try:
-    
         weight = 0
         amount = 0
         food = "" 
@@ -18,8 +15,8 @@ def calculadora():
             food = request_json["food"]
     
     except:
-        print("request error")
-
+        return "request error"
+        
     #aqui saca los datos del contaminante
     contaminante="Cd"
     cur = mysql.connection.cursor()

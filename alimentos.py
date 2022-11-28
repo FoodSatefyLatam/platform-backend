@@ -1,6 +1,4 @@
-from flask import jsonify
-
-from __main__ import app, mysql
+from __main__ import app, mysql, jsonify
 
 @app.route("/alimentos")
 def alimentos():
