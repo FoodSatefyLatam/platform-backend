@@ -15,7 +15,7 @@ def alimentos():
         dict_alimentos = {}
         request_json = request.get_json()
         contaminantes = []
-        if(request_json.get("contaminantes").size != 0):
+        if(request_json.get("contaminantes")):
             for contaminante in request_json.get("contaminantes"):
                 contaminantes.append(contaminante)
         for contaminante in contaminantes:
