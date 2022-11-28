@@ -27,4 +27,5 @@ def alimentos():
                     dict_alimentos[alimento[0]] = True
             for alimento in dict_alimentos.keys():
                 lista_alimentos.append(alimento)
+    lista_alimentos.sort()
     return jsonify(lista_alimentos)
