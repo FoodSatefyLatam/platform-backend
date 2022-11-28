@@ -21,6 +21,7 @@ def reporte():
     for alimento in request_json.get("alimentos"):
         alimentos.append(alimento)
     for alimento in alimentos:
+        print(alimento)
         #MySQLdb.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_al' at line 1")
         cur.execute("SELECT * FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
         reporte[alimento] = cur.fetchall()
