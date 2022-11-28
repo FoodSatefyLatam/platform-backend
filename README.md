@@ -30,12 +30,12 @@
 >
 >Recibe
 >```
->{contaminante: 'nombre_contaminante'}
+>{weight: 'peso', amount = 'cantidad', food = 'alimento'}
 >```
 >
 >Retorna:
 >```
->[alimento1, alimento2, alimento3]
+>[float]
 >```
 
 ### Reporte 📄
