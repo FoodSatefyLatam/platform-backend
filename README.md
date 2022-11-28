@@ -14,7 +14,9 @@
 >
 >Recibe: 
 >```
->{contaminante: 'nombre_contaminante'}
+>{
+> contaminante: 'nombre_contaminante'
+>}
 >```
 >
 >Retorna: 
