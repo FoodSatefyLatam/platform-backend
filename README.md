@@ -2,3 +2,7 @@
 
 ## API
   ### /alimentos
+    holaaaaaaaaa
+  ### /calculadora
+  ### /reporte
+
