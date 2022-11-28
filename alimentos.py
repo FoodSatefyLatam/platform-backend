@@ -26,6 +26,6 @@ def alimentos():
             for alimento in _alimentos:
                 dict_alimentos[alimento[0]] = True
         print(dict_alimentos.keys)
-        lista_alimentos = dict_alimentos.keys
+        #lista_alimentos = dict_alimentos.keys
 
     return jsonify(lista_alimentos)
