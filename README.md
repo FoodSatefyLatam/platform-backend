@@ -53,7 +53,17 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >
 >Recibe: 
 >```
->{contaminante: 'nombre_contaminante'}
+>{
+>"sexo": 1
+>"min_edad": 0
+>"max_edad": 120
+>"min_peso": 0
+>"max_peso": 300
+>"min_altura": 0
+>"max_altura": 200
+>"contaminantes":["As"]
+>"alimentos":["Albacora"]
+>}
 >```
 >
 >Retorna: 
