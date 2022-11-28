@@ -1,4 +1,4 @@
-from __main__ import app, mysql, request
+from __main__ import app, mysql, request, jsonify
 
 @app.route("/calculadora", methods = ['POST'])
 def calculadora():
@@ -15,8 +15,8 @@ def calculadora():
             food = request_json["food"]
     
     except:
-        return "request error"
-        
+        return "Error"
+
     #aqui saca los datos del contaminante
     contaminante="Cd"
     cur = mysql.connection.cursor()
@@ -31,9 +31,6 @@ def calculadora():
     print (promedio[0])
     print (valor_referencia[0])
     formula = (amount * float(promedio[0]))/(float(valor_referencia[0]) * weight) #amount es la cantidad de alimento y weight el peso de la persona
-    if formula < 1.0:
-        return "Dentro de lo normal"
-    else:
-        return "Dañino para la salud"
+    return jsonify(formula)
 
         
