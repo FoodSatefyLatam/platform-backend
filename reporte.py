@@ -2,6 +2,8 @@ from __main__ import app, mysql, request, jsonify
 
 @app.route("/reporte", methods=["POST"])
 def reporte():
+    if request.method != "POST":
+        return "error"
     reporte = {}
     cur = mysql.connection.cursor()
     sexo = 0
