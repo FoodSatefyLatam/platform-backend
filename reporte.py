@@ -38,7 +38,8 @@ def reporte():
             alimentos.append(alimento)
     for contaminante in contaminantes:
         print(contaminante)
-        cur.execute("SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_alimento=alimento.id_alimento JOIN muestreo ON persona.id_region=muestreo.id_region JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,contaminante])
+        #MySQLdb.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_al' at line 1")
+        cur.execute("SELECT * FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS persona JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_alimento=alimento.id_alimento JOIN muestreo ON persona.id_region=muestreo.id_region JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,contaminante])
         print(contaminante)
         reporte[contaminante] = cur.fetchall()
         print(contaminante)
