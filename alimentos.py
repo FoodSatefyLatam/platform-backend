@@ -16,12 +16,11 @@ def alimentos():
         request_json = request.get_json()
         contaminantes = []
         if(request_json.get("contaminantes")):
-            for contaminante in request_json.get("contaminantes"):
-                contaminantes.append(contaminante)
-        for contaminante in contaminantes:
-            cur = mysql.connection.cursor()
-            cur.execute("SELECT especie FROM alimento LEFT JOIN muestreo WHERE nombre = %s AND cantidad != 0",[contaminante])
-            _alimentos = cur.fetchall()
+            contaminantes = request_json.get("contaminantes")
+            for contaminante in contaminantes:
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT especie FROM alimento LEFT JOIN muestreo WHERE nombre = %s AND cantidad != 0",[contaminante])
+                _alimentos = cur.fetchall()
             for alimento in _alimentos:
                 dict_alimentos[alimento[0]] = True
 
