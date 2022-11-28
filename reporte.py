@@ -30,10 +30,10 @@ def reporte():
         if request_json.get("max_altura"):
             max_altura = request_json["max_altura"]            
             
-        if(not request_json.get("contaminantes").empty):
+        if(request_json.get("contaminantes")):
             for contaminante in request_json.get("contaminantes"):
                 contaminantes.append(contaminante)
-        if(request_json.get("alimentos").size != 0):
+        if(request_json.get("alimentos")):
             for alimento in request_json.get("alimentos"):
                 alimentos.append(alimento)
         for contaminante in contaminantes:
