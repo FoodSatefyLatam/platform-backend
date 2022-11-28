@@ -42,7 +42,7 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >
 >Retorna:
 >```
->[float]
+>[resultado]
 >```
 
 ### Reporte 📄
