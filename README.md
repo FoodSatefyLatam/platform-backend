@@ -20,12 +20,21 @@ Retorna:
 ### Calculadora
 /calculadora
 `[POST]` Retorna la lista de alimentos con el contaminante dado
->
->
-  
+
+```
+Recibe:
+{contaminante: 'nombre_contaminante'}
+Retorna:
+[alimento1, alimento2, alimento3]
+```
 
 ### Reporte
 /reporte
 `[POST]` Retorna la lista de alimentos con el contaminante dado
->
->
+
+```
+Recibe:
+{contaminante: 'nombre_contaminante'}
+Retorna:
+[alimento1, alimento2, alimento3]
+```
