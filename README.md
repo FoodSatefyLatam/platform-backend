@@ -34,7 +34,7 @@
 > weight: 'peso', 
 > amount = 'cantidad', 
 > food = 'alimento'
-}
+>}
 >```
 >
 >Retorna:
