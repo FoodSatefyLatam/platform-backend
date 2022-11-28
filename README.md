@@ -9,7 +9,7 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >
 >Retorna: 
 >```
->[alimento1, alimento2, alimento3]
+>["alimento1", "alimento2", "alimento3"]
 >```
 >
 >**`[POST]` Retorna la lista de alimentos con el contaminante dado**
@@ -17,14 +17,14 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >Recibe: 
 >```
 >{
-> contaminante: 'nombre_contaminante'
+> "contaminante": "nombre_contaminante"
 >}
 >```
 >
 >Retorna: 
 >
 >```
->[alimento1, alimento2, alimento3]
+>["alimento1", "alimento2", "alimento3"]
 >```
 
 ### Calculadora 🎲
@@ -35,15 +35,15 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >Recibe
 >```
 >{
-> weight: 'peso', 
-> amount = 'cantidad', 
-> food = 'alimento'
+> "weight": "peso", 
+> "amount": "cantidad", 
+> "food": "alimento"
 >}
 >```
 >
 >Retorna:
 >```
->[resultado]
+>["resultado"]
 >```
 
 ### Reporte 📄
@@ -54,20 +54,24 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >Recibe: 
 >```
 >{
->"sexo": 1
->"min_edad": 0
->"max_edad": 120
->"min_peso": 0
->"max_peso": 300
->"min_altura": 0
->"max_altura": 200
->"contaminantes":["As"]
->"alimentos":["Albacora"]
+>   "sexo":"1",
+>   "min_edad":"0",
+>   "max_edad":"120",
+>   "min_peso":"0",
+>   "max_peso":"300",
+>   "min_altura":"0",
+>   "max_altura":"200",
+>   "contaminantes":[
+>      "As"
+>   ],
+>   "alimentos":[
+>      "Albacora"
+>   ]
 >}
 >```
 >
 >Retorna: 
 >
 >```
->[alimento1, alimento2, alimento3]
+>["alimento1", "alimento2", "alimento3"]
 >```
