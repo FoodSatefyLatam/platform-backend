@@ -16,8 +16,6 @@ def reporte():
     max_peso = request_json["max_peso"]
     min_altura = request_json["min_altura"]
     max_altura = request_json["max_altura"]
-    for contaminante in request_json.get("contaminantes"):
-        contaminantes.append(contaminante)
     for alimento in request_json.get("alimentos"):
         alimentos.append(alimento)
     for alimento in alimentos:
