@@ -4,7 +4,7 @@ from __main__ import app, mysql, request, jsonify
 def reporte():
     if request.method != "POST":
         return "error"
-    _reporte = {}
+    reporte = {}
     cur = mysql.connection.cursor()
     sexo = 0
     min_edad = 0
@@ -17,6 +17,7 @@ def reporte():
     alimentos = []
     try:
         print(1)
+        print(request.get_json())
         request_json = request.get_json()
         print(1.1)
         if request_json.get("sexo"):
@@ -44,7 +45,7 @@ def reporte():
         for contaminante in contaminantes:
             consulta = ("SELECT * FROM persona FULL OUTER JOIN consumo ON id_folio=id_folio FULL OUTER JOIN muestreo ON persona.id_region=muestreo.id_region FULL OUTER JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[contaminante])
             cur.execute(consulta)
-            _reporte[contaminante] = cur.fetchall()
+            reporte[contaminante] = cur.fetchall()
         print(4)
     except:
         return "Error"
