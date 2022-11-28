@@ -1,6 +1,6 @@
 from __main__ import app, mysql, jsonify
 
-@app.route("/alimentos")
+@app.route("/alimentos", methods=["GET", "POST"])
 def alimentos():
     cur = mysql.connection.cursor()
     cur.execute("SELECT especie FROM alimento")
