@@ -1,7 +1,6 @@
-# Backend
+# Backend API
 
-## API
-### /alimentos
+## /alimentos
 `[GET]` Retorna la lista completa de alimentos
 ```
 Retorna
@@ -16,13 +15,13 @@ Retorna:
 [alimento1, alimento2, alimento3]
 ```
 
-### /calculadora
+## /calculadora
 `[POST]` Retorna la lista de alimentos con el contaminante dado
 >
 >
   
 
-### /reporte
+## /reporte
 `[POST]` Retorna la lista de alimentos con el contaminante dado
 >
 >
