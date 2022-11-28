@@ -18,6 +18,7 @@ def alimentos():
         if(request_json.get("contaminantes")):
             #contaminantes = request_json.get("contaminantes")
             print(contaminantes)
+            print("hola")
             #for contaminante in contaminantes:
             #    cur = mysql.connection.cursor()
             #    cur.execute("SELECT especie FROM alimento LEFT JOIN muestreo WHERE nombre = %s AND cantidad != 0",[contaminante])
