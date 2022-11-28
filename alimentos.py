@@ -21,7 +21,7 @@ def alimentos():
             print(contaminantes)
             for contaminante in contaminantes:
                 cur = mysql.connection.cursor()
-                cur.execute("SELECT especie FROM alimento LEFT JOIN muestreo ON id_alimento=id_alimento LEFT JOIN contaminante ON contaminante.nombre = %s AND muestreo.cantidad != 0",[contaminante])
+                cur.execute("SELECT especie FROM alimento LEFT JOIN muestreo ON alimento.id_alimento=muestreo.id_alimento LEFT JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s AND muestreo.cantidad != 0",[contaminante])
                 _alimentos = cur.fetchall()
             for alimento in _alimentos:
                 dict_alimentos[alimento[0]] = True
