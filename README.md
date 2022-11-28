@@ -30,7 +30,11 @@
 >
 >Recibe
 >```
->{weight: 'peso', amount = 'cantidad', food = 'alimento'}
+>{
+> weight: 'peso', 
+> amount = 'cantidad', 
+> food = 'alimento'
+}
 >```
 >
 >Retorna:
