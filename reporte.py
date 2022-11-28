@@ -41,6 +41,7 @@ def reporte():
             alimentos.append(alimento)
     print(3)
     for contaminante in contaminantes:
+        print(contaminante)
         cur.execute("SELECT * FROM persona JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_alimento=alimento.id_alimento JOIN muestreo ON persona.id_region=muestreo.id_region JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[contaminante])
         reporte[contaminante] = cur.fetchall()
     print(4)
