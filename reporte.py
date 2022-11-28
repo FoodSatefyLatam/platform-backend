@@ -38,7 +38,7 @@ def reporte():
             alimentos.append(alimento)
     for contaminante in contaminantes:
         print(contaminante)
-        cur.execute("SELECT * FROM persona WHERE sexo=%d AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_alimento=alimento.id_alimento JOIN muestreo ON persona.id_region=muestreo.id_region JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,contaminante])
+        cur.execute("SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s JOIN consumo ON persona.id_folio=consumo.id_folio JOIN alimento ON consumo.id_alimento=alimento.id_alimento JOIN muestreo ON persona.id_region=muestreo.id_region JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,contaminante])
         print(contaminante)
         reporte[contaminante] = cur.fetchall()
         print(contaminante)
