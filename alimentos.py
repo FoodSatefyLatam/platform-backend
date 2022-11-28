@@ -26,7 +26,8 @@ def alimentos():
                 for alimento in _alimentos:
                     dict_alimentos[alimento[0]] = True
             
-            for alimento in dict_alimentos.keys:
+            for alimento in dict_alimentos.keys():
+                print(alimento)
                 lista_alimentos.append(alimento)
             ##print(dict_alimentos.keys)
         #lista_alimentos = dict_alimentos.keys
