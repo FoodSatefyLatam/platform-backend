@@ -25,7 +25,10 @@ def alimentos():
                 _alimentos = cur.fetchall()
                 for alimento in _alimentos:
                     dict_alimentos[alimento[0]] = True
-            print(dict_alimentos.keys)
+            
+            for alimento in dict_alimentos.keys:
+                lista_alimentos.append(alimento)
+            ##print(dict_alimentos.keys)
         #lista_alimentos = dict_alimentos.keys
 
     return jsonify(lista_alimentos)
