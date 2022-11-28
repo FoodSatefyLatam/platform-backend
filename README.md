@@ -3,6 +3,7 @@
 ## API
 ### Alimentos
 /alimentos
+
 `[GET]` Retorna la lista completa de alimentos
 ```
 Retorna
@@ -19,6 +20,7 @@ Retorna:
 
 ### Calculadora
 /calculadora
+
 `[POST]` Retorna la lista de alimentos con el contaminante dado
 
 ```
@@ -30,6 +32,7 @@ Retorna:
 
 ### Reporte
 /reporte
+
 `[POST]` Retorna la lista de alimentos con el contaminante dado
 
 ```
