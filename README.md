@@ -1,6 +1,6 @@
 # Backend
 ## API
-### Alimentos
+### Alimentos 🍞
 **Ruta** : */alimentos*
 
 >**`[GET]` Retorna la lista completa de alimentos**
@@ -23,7 +23,7 @@
 >[alimento1, alimento2, alimento3]
 >```
 
-### Calculadora
+### Calculadora 🎲
 **Ruta:** */calculadora*
 
 >**`[POST]` Retorna la lista de alimentos con el contaminante dado**
@@ -38,7 +38,7 @@
 >[alimento1, alimento2, alimento3]
 >```
 
-### Reporte
+### Reporte 📄
 **Ruta:** */reporte*
 
 >**`[POST]` Retorna la lista de alimentos con el contaminante dado**
