@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'abcd.1234'
-app.config['MYSQL_DB'] = 'proyectocontaminantes'
+app.config['MYSQL_USER'] = 'grupo1'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'grupo1'
 mysql = MySQL(app)
 
 import alimentos,calculadora
@@ -34,7 +34,7 @@ def request_db():
         return "request error"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port = '5001',  host= '0.0.0.0', debug=True)
 
 
 
