@@ -8,7 +8,7 @@ def reporte():
     cur = mysql.connection.cursor()
     sexo = 0
     min_edad = 0
-    max_edad = 1000
+    max_edad = 0
     min_peso = 0
     max_peso = 1000
     min_altura = 0
