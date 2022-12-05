@@ -42,7 +42,7 @@ def reporte():
 
             print("["+ alimento +"]["+ contaminante + "]")
             if consumo_promedio is None or promedio_contaminate is None: 
-                reporte[alimento][contaminante] = 0
+                continue
                 
             else:
                 #print(float(consumo_promedio))
