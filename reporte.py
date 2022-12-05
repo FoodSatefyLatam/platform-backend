@@ -17,7 +17,7 @@ def reporte():
     alimentos = request_json.get("alimentos")
     contaminantes = request_json.get("contaminantes")
     for alimento in alimentos:
-        reporte[alimento] = []
+        reporte[alimento] = {}
         for contaminante in contaminantes: 
             cur.execute("SELECT AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             avgs = cur.fetchall()
