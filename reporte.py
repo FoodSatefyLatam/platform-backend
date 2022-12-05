@@ -21,14 +21,14 @@ def reporte():
     for contaminante in contaminantes: 
         cur.execute("SELECT valor_referencia, id_contaminante FROM contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
-        print(res[0][0])
-        valores_referencia[contaminante] = res[0][0]
-        id_contaminantes[contaminante] = res[0][1]
+        if(res[0][0]!= ""):
+            valores_referencia[contaminante] = res[0][0]
+            id_contaminantes[contaminante] = res[0][1]
 
     for alimento in alimentos:
         reporte[alimento] = {}
         for contaminante in contaminantes: 
-            cur.execute("SELECT alimento.id_alimento AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
+            cur.execute("SELECT alimento.id_alimento, AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             avgs = cur.fetchall()
 
             id_alimento = avgs[0][0]
