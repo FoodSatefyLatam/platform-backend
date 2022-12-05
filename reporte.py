@@ -39,7 +39,7 @@ def reporte():
             promedio_contaminate = cur.fetchone()[0]
 
             print("["+ alimento +"]["+ contaminante + "]")
-            if consumo_promedio is None or promedio_contaminate is None: 
+            if consumo_promedio is None or promedio_contaminate is None or float(valores_referencia[contaminante]) is 0.0: 
                 reporte[alimento][contaminante] = 0
                 
             else:
