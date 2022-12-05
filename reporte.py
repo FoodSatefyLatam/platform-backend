@@ -38,5 +38,9 @@ def reporte():
             promedio_contaminate = cur.fetchone()[0]
 
             print("["+ alimento +"]["+ contaminante + "]")
-            reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
+            if peso_promedio == "": 
+                reporte[alimento][contaminante] = 0
+            else:
+                reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
+
     return jsonify(reporte)
