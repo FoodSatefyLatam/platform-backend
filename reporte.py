@@ -29,7 +29,9 @@ def reporte():
         cur.execute("SELECT id_alimento FROM alimento WHERE especie=%s",[alimento]) 
         id_alimento=cur.fetchone()[0]
         reporte[alimento] = {}
-        for contaminante in contaminantes: 
+        for contaminante in contaminantes:
+            if float(valores_referencia[contaminante]) == 0.0: 
+                continue
             cur.execute("SELECT AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             avgs = cur.fetchall()
 
@@ -39,7 +41,7 @@ def reporte():
             promedio_contaminate = cur.fetchone()[0]
 
             print("["+ alimento +"]["+ contaminante + "]")
-            if consumo_promedio is None or promedio_contaminate is None or float(valores_referencia[contaminante]) == 0.0: 
+            if consumo_promedio is None or promedio_contaminate is None: 
                 reporte[alimento][contaminante] = 0
                 
             else:
@@ -47,6 +49,7 @@ def reporte():
                 print(float(promedio_contaminate))
                 print(float(valores_referencia[contaminante]))
                 print(float(peso_promedio))
-                reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
+                reporte[contaminante] += (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
+                #reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
 
     return jsonify(reporte)
