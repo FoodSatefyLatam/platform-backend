@@ -21,6 +21,7 @@ def reporte():
     for contaminante in contaminantes: 
         cur.execute("SELECT valor_referencia, id_contaminante FROM contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
+        print(res[0][0])
         valores_referencia[contaminante] = res[0][0]
         id_contaminantes[contaminante] = res[0][1]
 
