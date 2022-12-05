@@ -31,6 +31,4 @@ def calculadora():
     print (promedio[0])
     print (valor_referencia[0])
     formula = (amount * float(promedio[0]))/(float(valor_referencia[0]) * weight) #amount es la cantidad de alimento y weight el peso de la persona
-    return jsonify(formula)
-
-        
+    return jsonify(formula)   
