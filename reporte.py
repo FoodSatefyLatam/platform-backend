@@ -35,19 +35,14 @@ def reporte():
 
             peso_promedio = avgs[0][0]
             consumo_promedio = avgs[0][1]
-            print(avgs[0][1])
             cur.execute("SELECT Avg(cantidad)  FROM  muestreo WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimento]))
             promedio_contaminate = cur.fetchone()[0]
 
             print("["+ alimento +"]["+ contaminante + "]")
-            if peso_promedio == "" or promedio_contaminate == "": 
+            if consumo_promedio == "" or promedio_contaminate == "": 
                 reporte[alimento][contaminante] = 0
                 
             else:
-                print(float(consumo_promedio))
-                print(float(promedio_contaminate))
-                print(float(valores_referencia[contaminante]))
-                print(float(peso_promedio))
                 reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
 
     return jsonify(reporte)
