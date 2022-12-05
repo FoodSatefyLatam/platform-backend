@@ -16,13 +16,27 @@ def reporte():
     max_altura = request_json["max_altura"]
     alimentos = request_json.get("alimentos")
     contaminantes = request_json.get("contaminantes")
+    valores_referencia = {}
+    id_contaminantes = {}
+    for contaminante in contaminantes: 
+        cur.execute("SELECT valor_referencia, id_contaminantes FROM contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
+        res = cur.fetchone()
+        valores_referencia[contaminante] = res[0][0]
+        id_contaminantes[contaminante] = res[0][1]
+
     for alimento in alimentos:
         reporte[alimento] = {}
         for contaminante in contaminantes: 
-            cur.execute("SELECT AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
+            cur.execute("SELECT alimento.id_alimento AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             avgs = cur.fetchall()
-            peso_promedio = avgs[0][0]
-            consumo_promedio = avgs[0][0]
+
+            id_alimento = avgs[0][0]
+            peso_promedio = avgs[0][1]
+            consumo_promedio = avgs[0][2]
+
+            cur.execute("SELECT Avg(cantidad)  FROM  muestreo WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimento]))
+            promedio_contaminate = cur.fetchone()[0]
+
             print("["+ alimento +"]["+ contaminante + "]")
-            reporte[alimento][contaminante] = consumo_promedio
+            reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
     return jsonify(reporte)
