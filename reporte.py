@@ -49,7 +49,7 @@ def reporte():
                 #print(float(promedio_contaminate))
                 #print(float(valores_referencia[contaminante]))
                 #print(float(peso_promedio))
-                if reporte[contaminante] is None:
+                if not contaminante in reporte:
                     reporte[contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
                 else:
                     reporte[contaminante] += (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
