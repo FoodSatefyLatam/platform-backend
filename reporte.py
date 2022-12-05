@@ -43,6 +43,10 @@ def reporte():
                 reporte[alimento][contaminante] = 0
                 
             else:
+                print(float(consumo_promedio))
+                print(float(promedio_contaminate))
+                print(float(valores_referencia[contaminante]))
+                print(float(peso_promedio))
                 reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
 
     return jsonify(reporte)
