@@ -26,14 +26,15 @@ def reporte():
             id_contaminantes[contaminante] = res[0][1]
 
     for alimento in alimentos:
+        cur.execute("SELECT id_alimento FROM alimento WHERE especie=%s",[alimento]) 
+        id_alimento=cur.fetchone()[0]
         reporte[alimento] = {}
         for contaminante in contaminantes: 
-            cur.execute("SELECT alimento.id_alimento, AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
+            cur.execute("SELECT AVG(p.peso), AVG(consumo.cantidad) FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             avgs = cur.fetchall()
-
-            id_alimento = avgs[0][0]
-            peso_promedio = avgs[0][1]
-            consumo_promedio = avgs[0][2]
+            
+            peso_promedio = avgs[0][0]
+            consumo_promedio = avgs[0][1]
 
             cur.execute("SELECT Avg(cantidad)  FROM  muestreo WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimento]))
             promedio_contaminate = cur.fetchone()[0]
