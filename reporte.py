@@ -35,7 +35,7 @@ def reporte():
 
             peso_promedio = avgs[0][0]
             consumo_promedio = avgs[0][1]
-
+            print(avgs[0][1])
             cur.execute("SELECT Avg(cantidad)  FROM  muestreo WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimento]))
             promedio_contaminate = cur.fetchone()[0]
 
