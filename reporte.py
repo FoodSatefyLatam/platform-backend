@@ -23,5 +23,5 @@ def reporte():
             peso_promedio = avgs[0][0]
             consumo_promedio = avgs[0][0]
             print("["+ alimento +"]["+ contaminate + "]peso_promedio:" + peso_promedio + ";" + "consumo_promedio:" + consumo_promedio)
-            reporte[alimento][contaminate] = consumo_promedio
+            #reporte[alimento][contaminate] = consumo_promedio
     return jsonify(reporte)
