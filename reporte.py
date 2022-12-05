@@ -28,7 +28,7 @@ def reporte():
     for alimento in alimentos:
         cur.execute("SELECT id_alimento FROM alimento WHERE especie=%s",[alimento]) 
         id_alimento=cur.fetchone()[0]
-        reporte[alimento] = {}
+        #reporte[alimento] = {}
         for contaminante in contaminantes:
             if float(valores_referencia[contaminante]) == 0.0: 
                 continue
@@ -49,7 +49,10 @@ def reporte():
                 #print(float(promedio_contaminate))
                 #print(float(valores_referencia[contaminante]))
                 #print(float(peso_promedio))
-                reporte[contaminante] += (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
+                if reporte[contaminante] is None:
+                    reporte[contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
+                else:
+                    reporte[contaminante] += (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
                 #reporte[alimento][contaminante] = (float(consumo_promedio) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(peso_promedio))
 
     return jsonify(reporte)
