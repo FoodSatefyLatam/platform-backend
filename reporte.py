@@ -75,7 +75,7 @@ def reporte():
             if(c_personas != 0):
                 reporte[contaminante]["promedio"] += (formula/c_personas)
                 reporte[contaminante]["alimentos"] += 1
-                reporte[contaminante]["alimento"] = max_formula
+                reporte[contaminante][alimento] = max_formula
 
 
     return jsonify(reporte)
