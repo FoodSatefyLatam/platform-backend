@@ -24,7 +24,8 @@ def reporte():
     for contaminante in contaminantes:
         reporte[contaminante] = {}
         reporte[contaminante]["promedio"] = 0
-        reporte[contaminante]["alimentos"] = 0
+        reporte[contaminante]["cantidad_alimentos"] = 0
+        reporte[contaminante]["alimentos"] = {}
         cur.execute("SELECT valor_referencia, id_contaminante FROM contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
         if(res[0][0]!= ""):
@@ -37,7 +38,6 @@ def reporte():
     for alimento in alimentos:
         cur.execute("SELECT id_alimento FROM alimento WHERE especie=%s",[alimento]) 
         id_alimento=cur.fetchone()[0]
-        #reporte[alimento] = {}
         for contaminante in contaminantes:
             formula = 0.0
             c_personas = 0
@@ -62,6 +62,7 @@ def reporte():
             max_formula["consumo"] = 0
             max_formula["altura"] = 0
 
+
             for persona in personas:
                 formula_actual = (float(persona[1]) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[0]))
                 if(formula_actual  > max_formula["valor formula"]):
@@ -74,9 +75,9 @@ def reporte():
                 c_personas+=1
             
             if(c_personas != 0):
-                reporte[contaminante][alimento] = max_formula
+                reporte[contaminante]["alimentos"][alimento] = max_formula
                 reporte[contaminante]["promedio"] += (formula/c_personas)
-                reporte[contaminante]["alimentos"] += 1
+                reporte[contaminante]["cantidad_alimentos"] += 1
                 
 
 
