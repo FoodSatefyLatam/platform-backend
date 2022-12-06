@@ -8,6 +8,9 @@ def reporte():
     cur = mysql.connection.cursor()
     request_json = request.get_json()
     sexo = request_json["sexo"]
+    s = ""
+    if(sexo != "0"):
+        s = "sexo="+sexo+" AND"
     min_edad = request_json["min_edad"]
     max_edad = request_json["max_edad"]
     min_peso = request_json["min_peso"]
@@ -49,7 +52,7 @@ def reporte():
             if(promedio_contaminate is None or promedio_contaminate == 0):
                 continue
 
-            cur.execute("SELECT p.peso, consumo.cantidad FROM (SELECT * FROM persona WHERE sexo=%s AND edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[sexo,min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
+            cur.execute("SELECT p.peso, consumo.cantidad FROM (SELECT * FROM persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             personas = cur.fetchall()
             
             for persona in personas:
