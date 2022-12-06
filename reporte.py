@@ -43,6 +43,7 @@ def reporte():
             c_personas = 0
             max_formula = 0.0
 
+
             if float(valores_referencia[contaminante]) == 0.0: 
                 continue
 
@@ -55,17 +56,26 @@ def reporte():
             cur.execute("SELECT p.peso, consumo.cantidad FROM (SELECT * FROM persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN consumo ON p.id_folio=consumo.id_folio LEFT JOIN alimento ON consumo.id_alimento=alimento.id_alimento WHERE alimento.especie=%s",[min_edad,max_edad,min_peso,max_peso,min_altura,max_altura,alimento])
             personas = cur.fetchall()
             
+            max_formula = {}
+            max_formula["valor formula"] = 0
+            max_formula["peso"] = 0
+            max_formula["consumo"] = 0
+
             for persona in personas:
                 formula_actual = (float(persona[1]) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[0]))
-                if(formula_actual  > max_formula):
-                    max_formula = formula_actual
+                if(formula_actual  > max_formula["valor formula"]):
+                    max_formula["valor formula"] = formula_actual
+                    max_formula["peso"] = persona[0]
+                    max_formula["consumo"] = persona[1]
+
+
                 formula += formula_actual
                 c_personas+=1
             
             if(c_personas != 0):
                 reporte[contaminante]["promedio"] += (formula/c_personas)
                 reporte[contaminante]["alimentos"] += 1
-                #reporte[contaminante]["peor_caso"] += max_formula
+                reporte[contaminante]["alimento"] = max_formula
 
 
     return jsonify(reporte)
