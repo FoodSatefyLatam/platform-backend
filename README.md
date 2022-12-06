@@ -20,11 +20,10 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >Recibe: 
 >```
 >{
-> "contaminantes": 
->[
->  "contaminante1", 
->  "contaminante2" 
->]
+> "contaminantes": [
+>   "contaminante1", 
+>   "contaminante2" 
+> ]
 >}
 >```
 >
