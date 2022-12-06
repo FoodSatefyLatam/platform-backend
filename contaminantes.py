@@ -1,7 +1,7 @@
 from __main__ import app, mysql, request, jsonify
 
 @app.route("/contaminantes", methods=["GET", "POST"])
-def alimentos():
+def contaminantes():
     cur = mysql.connection.cursor()
     lista_contaminantes = []
     if request.method == 'GET':
