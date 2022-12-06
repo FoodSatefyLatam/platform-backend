@@ -57,28 +57,30 @@ def reporte():
             personas = cur.fetchall()
             
             max_formula = {}
-            max_formula["valor formula"] = 0
-            max_formula["peso"] = 0
-            max_formula["consumo"] = 0
-            max_formula["altura"] = 0
-
+            max_formula["valor formula peor caso"] = 0
+            max_formula["peso peor caso"] = 0
+            max_formula["consumo peor caso"] = 0
+            max_formula["altura peor caso"] = 0
 
             for persona in personas:
                 formula_actual = (float(persona[1]) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[0]))
-                if(formula_actual  > max_formula["valor formula"]):
-                    max_formula["valor formula"] = formula_actual
-                    max_formula["peso"] = persona[0]
-                    max_formula["consumo"] = persona[1]
-                    max_formula["altura"] = persona[2]
+                if(formula_actual  > max_formula["valor formula peor caso"]):
+                    max_formula["valor formula peor caso"] = formula_actual
+                    max_formula["peso peor caso"] = persona[0]
+                    max_formula["consumo peor caso"] = persona[1]
+                    max_formula["altura peor caso"] = persona[2]
 
                 formula += formula_actual
                 c_personas+=1
             
+
+            
             if(c_personas != 0):
                 reporte[contaminante]["alimentos"][alimento] = max_formula
-                reporte[contaminante]["promedio"] += (formula/c_personas)
-                reporte[contaminante]["cantidad_alimentos"] += 1
-                
-
-
+                reporte[contaminante]["alimentos"][alimento]["cantidad de personas"] = c_personas
+                reporte[contaminante]["alimentos"][alimento]["promedio alimento"] = (formula/c_personas)
+                reporte[contaminante]["promedio contaminante"] += (formula/c_personas)
+                reporte[contaminante]["cantidad alimentos considerados"] += 1
+    
+    
     return jsonify(reporte)
