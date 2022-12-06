@@ -7,9 +7,12 @@ PROYECTO DESARROLLO DE SOFTWARE I
 
 >**`[GET]` Retorna la lista completa de alimentos**
 >
->Retorna: 
 >```
->["alimento1", "alimento2", "alimento3"]
+>[
+>    "alimento1", 
+>    "alimento2", 
+>    "alimento3"
+>]
 >```
 >
 >**`[POST]` Retorna la lista de alimentos con el contaminante dado**
