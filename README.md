@@ -24,7 +24,25 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >Retorna: 
 >
 >```
->["alimento1", "alimento2", "alimento3"]
+>[
+>    "alimento1", 
+>    "alimento2", 
+>    "alimento3"
+>]
+>```
+
+**Ruta** : */contaminantes*
+>**`[GET]` Retorna la lista completa de contaminantes**
+>Retorna: 
+>
+>```
+>[
+>  "As",
+>  "As i",
+>  "Cd",
+>  "Hg",
+>  "Pb"
+>]
 >```
 
 ### Calculadora 🎲
