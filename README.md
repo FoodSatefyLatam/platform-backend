@@ -73,5 +73,26 @@ PROYECTO DESARROLLO DE SOFTWARE I
 >Retorna: 
 >
 >```
->["alimento1", "alimento2", "alimento3"]
+>{
+>    "As": {
+>        "alimentos": 0,
+>        "promedio": 0
+>    },
+>    "As i": {
+>        "alimentos": 2,
+>        "promedio": 0.004504549869401107
+>    },
+>    "Cd": {
+>        "alimentos": 2,
+>        "promedio": 0.005152554738551069
+>    },
+>    "Hg": {
+>        "alimentos": 0,
+>        "promedio": 0
+>    },
+>    "Pb": {
+>        "alimentos": 0,
+>        "promedio": 0
+>    }
+>}
 >```
