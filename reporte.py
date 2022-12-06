@@ -23,8 +23,8 @@ def reporte():
     id_contaminantes = {}
     for contaminante in contaminantes:
         reporte[contaminante] = {}
-        reporte[contaminante]["promedio"] = 0
-        reporte[contaminante]["cantidad_alimentos"] = 0
+        reporte[contaminante]["promedio contaminante"] = 0
+        reporte[contaminante]["cantidad de alimentos considerados"] = 0
         reporte[contaminante]["alimentos"] = {}
         cur.execute("SELECT valor_referencia, id_contaminante FROM contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
@@ -80,7 +80,7 @@ def reporte():
                 reporte[contaminante]["alimentos"][alimento]["cantidad de personas"] = c_personas
                 reporte[contaminante]["alimentos"][alimento]["promedio alimento"] = (formula/c_personas)
                 reporte[contaminante]["promedio contaminante"] += (formula/c_personas)
-                reporte[contaminante]["cantidad alimentos considerados"] += 1
+                reporte[contaminante]["cantidad de alimentos considerados"] += 1
     
     
     return jsonify(reporte)
