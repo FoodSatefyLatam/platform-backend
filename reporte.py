@@ -63,7 +63,7 @@ def reporte():
             max_formula["altura peor caso"] = 0
 
             for persona in personas:
-                formula_actual = (float(persona[1]) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[0]))
+                formula_actual = (float(persona[1]/30) * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[0]))
                 if(formula_actual  > max_formula["valor formula peor caso"]):
                     max_formula["valor formula peor caso"] = formula_actual
                     max_formula["peso peor caso"] = persona[0]
