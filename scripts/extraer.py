@@ -11,7 +11,6 @@ mydb = mysql.connector.connect(
 )
 cursor = mydb.cursor()
 
-
 roman = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000, " ":0}
 def romanToInt(S: str) -> int:
     S = S.upper()
@@ -26,7 +25,7 @@ def romanToInt(S: str) -> int:
 
 datapath = r"datos.xlsx"
 
-contaminantes = ["As","As i","Cd","Hg", "Pb"]
+contaminantes = ["As","As i","Cd","Hg","Pb"]
 
 columnas = ["Año de Muestreo", "N° Asignado por \nLaboratorio","Región","Lugar de Captura o Extracción/País de origen y Marca \n(zona o centro de cultivo, incluyendo nombre, comuna, provincia, región, país)","Categoria","Especie y detalles ","As (mg/kg)","As i (mg/kg)","Cd (mg/kg)","Hg (mg/Kg)","Pb (mg/Kg)"]
 data = pd.read_excel(datapath,usecols=columnas)
@@ -36,30 +35,38 @@ contaminantes_dic = {}
 
 sql_alimento = "INSERT INTO alimento(categoria,especie) VALUES (%s , %s)"
 for index, fila in data.iterrows():
-    if columnas[6] in animales_dic.keys():
+    especie = fila[columnas[5]]
+    especie = especie.lower().replace("pescado","").replace("natural","").replace("marisco","").strip()
+    categoria = fila[columnas[4]]
+    categoria = categoria.strip().lower()
+
+    if especie in animales_dic.keys():
         continue
+
     #consultar si existe en la db
-    cursor.execute("SELECT * FROM alimento WHERE especie=\'{}\'".format(fila[columnas[5]]))
+    cursor.execute("SELECT * FROM alimento WHERE especie=\'{}\'".format(especie))
     if cursor.fetchall() == []:
-        cursor.execute(sql_alimento, [fila[columnas[4]], fila[columnas[5]]])
+        cursor.execute(sql_alimento, [categoria, especie])
         mydb.commit()
 
-    cursor.execute("SELECT id_alimento FROM alimento WHERE especie =\'{}\'".format(fila[columnas[5]]))
+    cursor.execute("SELECT id_alimento FROM alimento WHERE especie =\'{}\'".format(especie))
     id_alimento = cursor.fetchall()[0][0]
-    animales_dic[fila[columnas[5]]] = id_alimento
+    animales_dic[especie] = id_alimento
 
 
 
 sql_contaminante = "INSERT INTO contaminante(nombre, compuesto) VALUES (%s , %s)"
 for contaminante in contaminantes:
-    cursor.execute("SELECT * FROM contaminante WHERE compuesto=\'{}\'".format(contaminante))
-    if cursor.fetchall() == []:
-        cursor.execute(sql_contaminante, [contaminante, contaminante])
-        mydb.commit()
+  contaminante = contaminante.strip()
+  contaminante = contaminante.lower()
+  cursor.execute("SELECT * FROM contaminante WHERE compuesto=\'{}\'".format(contaminante))
+  if cursor.fetchall() == []:
+      cursor.execute(sql_contaminante, [contaminante, contaminante])
+      mydb.commit()
 
-    cursor.execute("SELECT id_contaminante FROM contaminante WHERE compuesto=\'{}\'".format(contaminante))
-    id_contaminante = cursor.fetchall()[0][0]
-    contaminantes_dic[contaminante] = id_contaminante
+  cursor.execute("SELECT id_contaminante FROM contaminante WHERE compuesto=\'{}\'".format(contaminante))
+  id_contaminante = cursor.fetchall()[0][0]
+  contaminantes_dic[contaminante] = id_contaminante
 
 sql_region = "INSERT INTO region(id_region,nombre) VALUES (%s,%s)"
 sql_muestreo = "INSERT INTO muestreo(id_region, id_alimento, id_contaminante, cantidad, año, num_lab) VALUES(%s,%s,%s,%s,%s,%s)"
@@ -88,14 +95,15 @@ for index, fila in data.iterrows():
     if cursor.fetchall() == []:
         cursor.execute(sql_region,[romanToInt(fila[columnas[2]]), fila[columnas[2]]])
         mydb.commit()
-    
-    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[fila[5]], contaminantes_dic["As"], cont_as, fila[0], fila[1]])
+    especie = fila[columnas[5]]
+    especie = especie.lower().replace("pescado","").replace("natural","").replace("marisco","").strip()
+    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[especie], contaminantes_dic["as"], cont_as, fila[0], fila[1]])
     mydb.commit()
-    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[fila[5]], contaminantes_dic["As i"], cont_as_i, fila[0], fila[1]])
+    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[especie], contaminantes_dic["as i"], cont_as_i, fila[0], fila[1]])
     mydb.commit()
-    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[fila[5]], contaminantes_dic["Cd"], cont_cd, fila[0], fila[1]])
+    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[especie], contaminantes_dic["cd"], cont_cd, fila[0], fila[1]])
     mydb.commit()
-    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[fila[5]], contaminantes_dic["Hg"], cont_hg, fila[0], fila[1]])
+    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[especie], contaminantes_dic["hg"], cont_hg, fila[0], fila[1]])
     mydb.commit()
-    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[fila[5]], contaminantes_dic["Pb"], cont_pb, fila[0], fila[1]])
+    cursor.execute(sql_muestreo, [romanToInt(fila[columnas[2]]) , animales_dic[especie], contaminantes_dic["pb"], cont_pb, fila[0], fila[1]])
     mydb.commit()
