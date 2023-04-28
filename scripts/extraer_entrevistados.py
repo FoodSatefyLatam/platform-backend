@@ -49,8 +49,10 @@ print(df_entrevistado.head())
 df_entrevistado.to_csv("entrevistados.csv", index=False)
 
 sql_persona = "INSERT INTO persona(edad,peso,sexo,altura,id_comuna,id_persona) VALUES (%s,%s,%s,%s,%s,%s)"
+#comuna debe tener id auto increment
 sql_comuna = "INSERT INTO Comuna(nombre_comuna, id_region) VALUES (%s)"
 sql_region = "INSERT INTO Region(id_region, id_macrozona) VALUES (%s)"
+#macrozona debe tener id auto increment
 sql_macrozona = "INSERT INTO Macrozona(nombre) VALUS(%s)"
 
 for ind in df_entrevistado.index:
