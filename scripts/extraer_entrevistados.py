@@ -30,9 +30,9 @@ col_entrevistado_aa = [
     "g_comuna"
 ]
 
-df_najustado = pd.read_csv("ENCA_Er24h_Nutrientes_AJUSTADO.csv", sep=',', header=0, usecols = col_entrevistado_na)
+df_najustado = pd.read_csv("..../csv/ENCA_Er24h_Nutrientes_AJUSTADO.csv", sep=',', header=0, usecols = col_entrevistado_na)
 
-df_anajustado = pd.read_csv("ENCA_ETCC_ALIMENTOS_AGRUPADOS.csv", sep=',', header=0, usecols= col_entrevistado_aa)
+df_anajustado = pd.read_csv("..../csv/ENCA_ETCC_ALIMENTOS_AGRUPADOS.csv", sep=',', header=0, usecols= col_entrevistado_aa)
 df_anajustado.rename(columns={'folio': 'id'}, inplace=True)
 
 print(df_anajustado.shape)
