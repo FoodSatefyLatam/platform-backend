@@ -62,9 +62,9 @@ for ind in df_entrevistado.index:
     sexo = (0 , 1)[df_entrevistado["sex"][ind] == "Mujer"]
     altura = df_entrevistado["ht"][ind]
     id_persona = df_entrevistado["id"][ind]
-    comuna = df_entrevistado["g_comuna"][ind]
-    region = df_entrevistado["region"][ind]
-    macrozona = df_entrevistado["macrozona"][ind]
+    comuna = df_entrevistado["g_comuna"][ind].trim().lower()
+    region = df_entrevistado["region"][ind].trim().lower()
+    macrozona = df_entrevistado["macrozona"][ind].trim().lower()
 
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
     if cursor.fetchall() == []:
@@ -85,4 +85,4 @@ for ind in df_entrevistado.index:
     id_comuna = cursor.fetchall()[0][0]
 
     cursor.execute(sql_persona, [int(edad), float(peso.replace(",",".")), sexo, float(altura.replace(",",".")), id_comuna, int(id_persona)])
-    mydb.commit() 
+    mydb.commit()
