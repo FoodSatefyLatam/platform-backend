@@ -79,7 +79,7 @@ for ind in df_entrevistado.index:
             id_macrozona = cursor.fetchall()[0][0]
             cursor.execute(sql_region, [str(region), id_macrozona])
             mydb.commit()
-        cursor.execute(sql_comuna, [comuna, region])
+        cursor.execute(sql_comuna, [comuna, str(region)])
         mydb.commit()
 
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
