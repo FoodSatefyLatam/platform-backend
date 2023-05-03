@@ -53,7 +53,7 @@ sql_persona = "INSERT INTO persona(edad,peso,sexo,altura,id_comuna,id_persona) V
 sql_comuna = "INSERT INTO Comuna(nombre_comuna, id_region) VALUES (%s)"
 sql_region = "INSERT INTO Region(id_region, id_macrozona) VALUES (%s)"
 #macrozona debe tener id auto increment
-sql_macrozona = "INSERT INTO Macrozona(nombre) VALUS(%s)"
+sql_macrozona = "INSERT INTO Macrozona(nombre) VALUES(%s)"
 
 for ind in df_entrevistado.index:
     edad = df_entrevistado["ageyrs"][ind]
@@ -62,9 +62,9 @@ for ind in df_entrevistado.index:
     sexo = (0 , 1)[df_entrevistado["sex"][ind] == "Mujer"]
     altura = df_entrevistado["ht"][ind]
     id_persona = df_entrevistado["id"][ind]
-    comuna = df_entrevistado["g_comuna"][ind].trim().lower()
-    region = df_entrevistado["region"][ind].trim().lower()
-    macrozona = df_entrevistado["macrozona"][ind].trim().lower()
+    comuna = df_entrevistado["g_comuna"][ind].strip().lower()
+    region = df_entrevistado["region"][ind].strip().lower()
+    macrozona = df_entrevistado["macrozona"][ind].strip().lower()
 
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
     if cursor.fetchall() == []:
