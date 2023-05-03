@@ -85,5 +85,5 @@ for ind in df_entrevistado.index:
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
     id_comuna = cursor.fetchall()[0][0]
 
-    cursor.execute(sql_persona, [int(edad), float(peso.replace(",",".")), sexo, float(altura.replace(",",".")), id_comuna, int(id_persona)])
+    cursor.execute(sql_persona, [int(edad), str(peso), sexo, str(altura), id_comuna, int(id_persona)])
     mydb.commit()
