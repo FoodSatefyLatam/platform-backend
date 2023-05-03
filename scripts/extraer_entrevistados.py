@@ -48,7 +48,7 @@ print(df_entrevistado.head())
 
 df_entrevistado.to_csv("entrevistados.csv", index=False)
 
-sql_persona = "INSERT INTO persona(edad,peso,sexo,altura,id_comuna,id_persona) VALUES (%s,%s,%s,%s,%s,%s)"
+sql_persona = "INSERT INTO Persona(edad,peso,sexo,altura,id_comuna,id) VALUES (%s,%s,%s,%s,%s,%s)"
 #comuna debe tener id auto increment
 sql_comuna = "INSERT INTO Comuna(nombre, id_region) VALUES (%s,%s)"
 sql_region = "INSERT INTO Region(id, id_macrozona) VALUES (%s,%s)"
@@ -85,5 +85,5 @@ for ind in df_entrevistado.index:
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
     id_comuna = cursor.fetchall()[0][0]
 
-    cursor.execute(sql_persona, [int(edad), str(peso), sexo, str(altura), id_comuna, int(id_persona)])
+    cursor.execute(sql_persona, [int(edad), str(peso), sexo, str(altura), id_comuna, str(id_persona)])
     mydb.commit()
