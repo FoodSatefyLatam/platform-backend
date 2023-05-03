@@ -70,23 +70,20 @@ for ind in df_entrevistado.index:
     if cursor.fetchall() == []:
         cursor.execute("SELECT * FROM Region WHERE id=\'{}\'".format(region))
         if cursor.fetchall() == []:
-            cursor.execute("SELECT * FROM Macrozona WHERE nombre=\'{}\'".format(region))
+            cursor.execute("SELECT * FROM Macrozona WHERE nombre=\'{}\'".format(macrozona))
             if cursor.fetchall() == []:
                 cursor.execute(sql_macrozona, [macrozona])
                 mydb.commit()
 
-            cursor.execute("SELECT * FROM Macrozona WHERE nombre=\'{}\'".format(region))
-            id_macrozona = cursor.fetchall()
-            print(id_macrozona)
-            id_macrozona = id_macrozona[0][0]
+            cursor.execute("SELECT * FROM Macrozona WHERE nombre=\'{}\'".format(macrozona))
+            id_macrozona = cursor.fetchall()[0][0]
             cursor.execute(sql_region, [region, id_macrozona])
             mydb.commit()
         cursor.execute(sql_comuna, [comuna, int(region)])
         mydb.commit()
 
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
-    id_comuna = cursor.fetchall()
-    id_comuna = id_comuna[0][0]
+    id_comuna = cursor.fetchall()[0][0]
 
     cursor.execute(sql_persona, [int(edad), float(peso.replace(",",".")), sexo, float(altura.replace(",",".")), id_comuna, int(id_persona)])
     mydb.commit()
