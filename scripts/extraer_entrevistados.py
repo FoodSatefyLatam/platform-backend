@@ -63,7 +63,7 @@ for ind in df_entrevistado.index:
     altura = df_entrevistado["ht"][ind]
     id_persona = df_entrevistado["id"][ind]
     comuna = df_entrevistado["g_comuna"][ind].strip().lower()
-    region = df_entrevistado["region"][ind].strip().lower()
+    region = df_entrevistado["region"][ind]
     macrozona = df_entrevistado["macrozona"][ind].strip().lower()
 
     cursor.execute("SELECT * FROM Comuna WHERE nombre=\'{}\'".format(comuna))
