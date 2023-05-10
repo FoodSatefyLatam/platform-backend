@@ -28,7 +28,7 @@ sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, consumo, consumo_mes
 for index, row in df_consumo_alimentos.iterrows():
     
     # Obtener el id_alimento a partir del g_producto
-    cursor.execute("SELECT id FROM Alimento WHERE g_producto=%s", (row["g_producto"],))
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["g_producto"],))
     id_alimento = cursor.fetchall()[0][0]
     
     # Insertar la fila en la tabla Consumo
