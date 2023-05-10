@@ -40,11 +40,12 @@ for index, row in df_consumo_alimentos.iterrows():
 
     # ROW["col"].isnull() ? 0 : ROW["col"]
     # Insertar la fila en la tabla Consumo
-    if(row["consumo_mes"].isnull())
+    if(pd.isna(row["consumo_mes"]))
         row["consumo_mes"] = 0
-
-    if(row["mg_ml"].isnull())
+    
+    if(pd.isna(row["mg_ml"]))
         row["mg_ml"] = 0
+
 
     cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     mydb.commit()
