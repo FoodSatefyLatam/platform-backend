@@ -31,6 +31,8 @@ for index, row in df_consumo_alimentos.iterrows():
     cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["g_producto"],))
     id_alimento = cursor.fetchall()[0][0]
     
+    print(id_alimento)
+    
     # Insertar la fila en la tabla Consumo
     cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     mydb.commit()
