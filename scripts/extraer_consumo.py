@@ -55,7 +55,7 @@ for index, row in df_consumo_alimentos.iterrows():
     else :
         cantidad = consumo[0][2] + row["mg_ml"]
         cantidad_mes = consumo[0][3] + row["consumo_mes"]
-        cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes))
+        cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes,row["folio"],id_alimento))
     # cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))   
     mydb.commit()
 
