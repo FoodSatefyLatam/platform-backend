@@ -14,7 +14,7 @@ cursor = mydb.cursor()
 
 # Lectura del archivo csv
 col_consumo = ["folio", "g_producto", "consumo_mes", "mg_ml"]
-df_consumo = pd.read_csv("archivo.csv", sep=',', usecols=col_consumo, header=0)
+df_consumo = pd.read_csv("/home/grupo1/csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=',', usecols=col_consumo, header=0)
 
 # Insertar datos en la tabla consumo
 for index, row in df_consumo.iterrows():
