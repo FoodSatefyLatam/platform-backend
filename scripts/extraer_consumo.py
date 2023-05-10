@@ -40,10 +40,10 @@ for index, row in df_consumo_alimentos.iterrows():
 
     # ROW["col"].isnull() ? 0 : ROW["col"]
     # Insertar la fila en la tabla Consumo
-    if(pd.isna(row["consumo_mes"]))
+    if pd.isna(row["consumo_mes"]) :
         row["consumo_mes"] = 0
     
-    if(pd.isna(row["mg_ml"]))
+    if pd.isna(row["mg_ml"]) :
         row["mg_ml"] = 0
 
 
