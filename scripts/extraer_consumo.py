@@ -47,6 +47,15 @@ for index, row in df_consumo_alimentos.iterrows():
     if pd.isna(row["mg_ml"]) :
         row["mg_ml"] = 0
 
+    cursor.execute("SELECT * FROM Consumo WHERE id_persona=%s AND id_alimento=%s")
+    consumo = cursor.fetchall()
 
-    cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
+    if consumo == []: 
+      cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
+    else :
+        cantidad = consumo[0][2] + row["mg_ml"]
+        cantidad_mes = consumo[0][3] + row["consumo_mes"]
+        cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes))
+    # cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))   
     mydb.commit()
+
