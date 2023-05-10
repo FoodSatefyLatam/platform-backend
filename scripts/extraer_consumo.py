@@ -17,7 +17,7 @@ cursor = mydb.cursor()
 
 # Lectura del archivo CSV de consumo de alimentos
 col_consumo = ["folio", "g_producto", "consumo_mes", "mg_ml"]
-df_consumo_alimentos = pd.read_csv("../../ENCA_ETCC_CONSUMO_ALIMENTOS.csv", sep=",", header=0, usecols=col_consumo)
+df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_CONSUMO_ALIMENTOS.csv", sep=",", header=0, usecols=col_consumo)
 
 # Imprimir el DataFrame
 print(df_consumo_alimentos)
