@@ -9,31 +9,28 @@ mydb = mysql.connector.connect(
     database='grupo1'
 )
 
-# Cursor para realizar consultas SQL
+# Verificación de la conexión
+print("Connected to:", mydb.get_server_info())
+
+# Creación del cursor para realizar consultas SQL
 cursor = mydb.cursor()
 
-# Lectura del archivo csv
+# Lectura del archivo CSV de consumo de alimentos
 col_consumo = ["folio", "g_producto", "consumo_mes", "mg_ml"]
-df_consumo = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=',', usecols=col_consumo, header=0)
+df_consumo_alimentos = pd.read_csv("../../ENCA_ETCC_CONSUMO_ALIMENTOS.csv", sep=",", header=0, usecols=col_consumo)
 
-# Insertar datos en la tabla consumo
-for index, row in df_consumo.iterrows():
-    folio = row["folio"]
-    g_producto = row["g_producto"]
-    consumo_mes = row["consumo_mes"]
-    mg_ml = row["mg_ml"]
+# Imprimir el DataFrame
+print(df_consumo_alimentos)
 
-    # Obtener el id de la persona
-    cursor.execute("SELECT id_persona FROM persona WHERE folio = %s", (folio,))
-    id_persona = cursor.fetchone()[0]
+# Inserción de datos en la tabla Consumo
+sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, consumo, consumo_mes) VALUES (%s, %s, %s, %s)"
 
-    # Obtener el id del alimento
-    cursor.execute("SELECT id_alimento FROM alimentos WHERE g_producto = %s", (g_producto,))
-    id_alimento = cursor.fetchone()[0]
-
-    # Insertar en la tabla consumo
-    sql = "INSERT INTO consumo (id_persona, id_alimento, consumo, consumo_mes) VALUES (%s, %s, %s, %s)"
-    val = (id_persona, id_alimento, consumo_mes, mg_ml)
-    cursor.execute(sql, val)
-
-mydb.commit()
+for index, row in df_consumo_alimentos.iterrows():
+    
+    # Obtener el id_alimento a partir del g_producto
+    cursor.execute("SELECT id FROM Alimento WHERE g_producto=%s", (row["g_producto"],))
+    id_alimento = cursor.fetchall()[0][0]
+    
+    # Insertar la fila en la tabla Consumo
+    cursor.execute(sql_consumo, (row["folio"], id_alimento, row["mg_ml"], row["consumo_mes"]))
+    mydb.commit()
