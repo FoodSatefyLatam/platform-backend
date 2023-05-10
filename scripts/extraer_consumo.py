@@ -23,7 +23,7 @@ df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.c
 print(df_consumo_alimentos)
 
 # Inserción de datos en la tabla Consumo
-sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, consumo, consumo_mes) VALUES (%s, %s, %s, %s)"
+sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
 
 for index, row in df_consumo_alimentos.iterrows():
     
@@ -32,7 +32,7 @@ for index, row in df_consumo_alimentos.iterrows():
     id_alimento = cursor.fetchall()[0][0]
     
     print(id_alimento)
-    
+
     # Insertar la fila en la tabla Consumo
     cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     mydb.commit()
