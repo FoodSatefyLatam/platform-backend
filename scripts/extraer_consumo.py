@@ -47,7 +47,7 @@ for index, row in df_consumo_alimentos.iterrows():
     if pd.isna(row["mg_ml"]) :
         row["mg_ml"] = 0
 
-    cursor.execute("SELECT * FROM Consumo WHERE id_persona=%s AND id_alimento=%s")
+    cursor.execute("SELECT * FROM Consumo WHERE id_persona=%s AND id_alimento=%s",(row["folio"],id_alimento))
     consumo = cursor.fetchall()
 
     if consumo == []: 
