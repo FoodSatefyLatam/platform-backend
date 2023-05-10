@@ -35,7 +35,7 @@ for index, row in df_consumo_alimentos.iterrows():
     id_categoria = cursor.fetchall()[0][0]
 
     # Obtener el id_alimento a partir del g_producto
-    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s and id_categoria=%s", (row["g_producto"],id_categoria,))
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s and categoria_id=%s", (row["g_producto"],id_categoria,))
     id_alimento = cursor.fetchall()[0][0]
     
 
