@@ -16,7 +16,7 @@ print("Connected to:", mydb.get_server_info())
 cursor = mydb.cursor()
 
 # Lectura del archivo CSV de consumo de alimentos
-col_consumo = ["folio", "g_producto", "consumo_mes", "mg_ml"]
+col_consumo = ["folio", "g_producto", "homologado","consumo_mes", "mg_ml"]
 df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo, encoding="ISO-8859-1")
 
 
@@ -29,14 +29,15 @@ sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_m
 
 for index, row in df_consumo_alimentos.iterrows():
     
+    # Obtener id categoria desde homologado
 
+    cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
+    id_categoria = cursor.fetchall()[0][0]
 
     # Obtener el id_alimento a partir del g_producto
-    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["g_producto"],))
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s and id_categoria=%s", (row["g_producto"],id_categoria,))
     id_alimento = cursor.fetchall()[0][0]
     
-    print(id_alimento)
-
 
     # ROW["col"].isnull() ? 0 : ROW["col"]
     # Insertar la fila en la tabla Consumo
