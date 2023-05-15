@@ -22,7 +22,7 @@ df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.c
 
 
 # Imprimir el DataFrame
-print(df_consumo_alimentos)
+print(row["homologados"].strip().lower())
 
 # Inserción de datos en la tabla Consumo
 sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
