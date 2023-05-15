@@ -35,8 +35,8 @@ for index, row in df_consumo_alimentos.iterrows():
     # id_categoria = cursor.fetchall()[0][0]
 
     # Obtener el id_alimento a partir del homologado
-    id_alimento = cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"],))
-    # id_alimento = cursor.fetchall()[0][0]
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"],))
+    id_alimento = cursor.fetchall()[0][0]
     print(id_alimento)
     print("Aqui muere")
     
