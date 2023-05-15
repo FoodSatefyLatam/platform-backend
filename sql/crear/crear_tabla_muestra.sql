@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS Muestra (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     id_alimento INT NOT NULL,
     id_contaminante INT NOT NULL,
-    id_comuna INT NOT NULL,
+    id_region INT NOT NULL,
     cantidad INT,
     PRIMARY KEY(id),
     FOREIGN KEY(id_alimento) REFERENCES Alimento(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(id_contaminante) REFERENCES Contaminante(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(id_comuna) REFERENCES Comuna(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY(id_region) REFERENCES Region(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

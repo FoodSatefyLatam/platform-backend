@@ -1,7 +1,5 @@
 CREATE TABLE IF NOT EXISTS Alimento (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     nombre TEXT,
-    categoria_id INT,
-    FOREIGN KEY(categoria_id) REFERENCES Categoria(id) ON DELETE SET NULL,
     PRIMARY KEY(id)
 );
