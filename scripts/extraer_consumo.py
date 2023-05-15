@@ -38,6 +38,7 @@ for index, row in df_consumo_alimentos.iterrows():
     nombre = df_consumo_alimentos["homologado"][index]
     nombre.rstrip()
     nombre.lstrip()
+    print("Nombre: ",nombre)
     cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (nombre,))
     id_alimento = cursor.fetchall()[0][0]
     # print(id_alimento)
