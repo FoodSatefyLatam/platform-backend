@@ -36,9 +36,10 @@ for index, row in df_consumo_alimentos.iterrows():
 
     # Obtener el id_alimento a partir del homologado
     nombre = df_consumo_alimentos["homologado"][index]
+    print("Nombre s/e:",nombre)
     nombre.rstrip()
     nombre.lstrip()
-    print("Nombre: ",nombre)
+    print("Nombre:",nombre)
     cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (nombre,))
     id_alimento = cursor.fetchall()[0][0]
     # print(id_alimento)
