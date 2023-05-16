@@ -28,7 +28,7 @@ print(df_consumo_alimentos)
 sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
 
 for index, row in df_consumo_alimentos.iterrows():
-    print(row["homologado"].strip().lower().replace(",","()"))
+    print(row["homologado"].strip().lower().replace(",",""))
     # Obtener id categoria desde homologado
 
     # cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
