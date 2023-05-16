@@ -17,7 +17,7 @@ cursor = mydb.cursor()
 
 # Lectura del archivo CSV de consumo de alimentos
 col_consumo = ["folio", "homologado","consumo_mes", "mg_ml"]
-df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo)
+df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo, encoding="ISO-8859-1")
 
 
 
@@ -28,14 +28,14 @@ print(df_consumo_alimentos)
 sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
 
 for index, row in df_consumo_alimentos.iterrows():
-    print(row["homologado"].strip().lower())
+    print(row["homologado"].strip().lower().replace(","."()"))
     # Obtener id categoria desde homologado
 
     # cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
     # id_categoria = cursor.fetchall()[0][0]
 
     # Obtener el id_alimento a partir del homologado
-    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"].strip().lower(),))
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"].strip().lower().replace(",","()"),))
     id_alimento = cursor.fetchall()[0][0]
     # print(id_alimento)
     # print("Aqui muere")
