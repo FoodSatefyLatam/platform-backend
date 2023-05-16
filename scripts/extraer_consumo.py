@@ -17,7 +17,7 @@ cursor = mydb.cursor()
 
 # Lectura del archivo CSV de consumo de alimentos
 col_consumo = ["folio", "homologado","consumo_mes", "mg_ml"]
-df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo")
+df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo)
 
 
 
