@@ -38,7 +38,7 @@ for index, row in df_consumo_alimentos.iterrows():
     # cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
     # id_categoria = cursor.fetchall()[0][0]
     
-    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row[homologado].strip().lower().replace(",",""),))
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"].strip().lower().replace(",",""),))
     id_alimento = cursor.fetchall()
     if not id_alimento:
         continue
