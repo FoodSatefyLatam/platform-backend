@@ -28,7 +28,7 @@ print(df_consumo_alimentos)
 sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
 
 for index, row in df_consumo_alimentos.iterrows():
-    
+    print(row["homologado"].strip().lower())
     # Obtener id categoria desde homologado
 
     # cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
@@ -37,7 +37,7 @@ for index, row in df_consumo_alimentos.iterrows():
     # Obtener el id_alimento a partir del homologado
     cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"].strip().lower(),))
     id_alimento = cursor.fetchall()[0][0]
-    print(id_alimento)
+    # print(id_alimento)
     # print("Aqui muere")
     
 
