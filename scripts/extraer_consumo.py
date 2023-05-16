@@ -18,8 +18,12 @@ cursor = mydb.cursor()
 # Lectura del archivo CSV de consumo de alimentos
 col_consumo = ["folio", "homologado","consumo_mes", "mg_ml"]
 df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo, encoding="ISO-8859-1")
-df_consumo_alimentos.dropna(subset=["homologado"], inplace=True)
 
+# Eliminar las filas donde la columna homologado esté vacía
+df_consumo_alimentos.dropna(subset=['homologado'], inplace=True)
+
+# Actualizar el índice del DataFrame después de eliminar las filas
+df_consumo_alimentos.reset_index(drop=True, inplace=True)
 
 # Imprimir el DataFrame
 print(df_consumo_alimentos)
