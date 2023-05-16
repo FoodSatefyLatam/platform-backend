@@ -38,11 +38,7 @@ for index, row in df_consumo_alimentos.iterrows():
     # cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
     # id_categoria = cursor.fetchall()[0][0]
     
-    homologado = row["homologado"].strip().lower().replace(",", "")
-    if homologado == "":
-        continue
-    
-    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (homologado,))
+    cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", row[homologado].strip().lower().replace(",",""),))
     id_alimento = cursor.fetchall()
     if not id_alimento:
         continue
@@ -57,13 +53,13 @@ for index, row in df_consumo_alimentos.iterrows():
         row["mg_ml"] = 0
 
     cursor.execute("SELECT * FROM Consumo WHERE id_persona=%s AND id_alimento=%s",(row["folio"],id_alimento))
-    consumo = cursor.fetchall()
+    consumo = cursor.fetchone()
 
-    if consumo == []: 
+    if consumo is None: 
       cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     else :
-        cantidad = consumo[0][2] + row["mg_ml"]
-        cantidad_mes = consumo[0][3] + row["consumo_mes"]
+        cantidad = consumo[2] + row["mg_ml"]
+        cantidad_mes = consumo[3] + row["consumo_mes"]
         cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes,row["folio"],id_alimento))
     # cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))   
     mydb.commit()
