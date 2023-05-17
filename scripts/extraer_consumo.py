@@ -56,17 +56,19 @@ for index, row in df_consumo_alimentos.iterrows():
     consumo = cursor.fetchone()
 
     if consumo is None: 
+      # print("El alimento aun no habia sido ingresado")
+      # print("Col")
       cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     else :
-        print("Entre porque id alimento: ",id_alimento)
-        print("columna mg_ml ", row["mg_ml"])
-        print("cantidad actual: ", consumo[2])
-        cantidad = consumo[2] + row["mg_ml"]
-        print("cantidad luego de sumar:", cantidad)
-        print("columna consumo_mes ", row["consumo_mes"])
-        print("Cantidad_mes actual ", consumo[3])
-        cantidad_mes = consumo[3] + row["consumo_mes"]
-        print("cantidad_mes luego de sumar",cantidad_mes)
+        # print("Entre porque id alimento: ",id_alimento)
+        # print("columna consumo_mes ", row["consumo_mes"])
+        # print("cantidad actual: ", consumo[2])
+        cantidad = consumo[2] + row["consumo_mes"]
+        # print("cantidad luego de sumar:", cantidad)
+        # print("columna mg_ml ", row["mg_ml"])
+        # print("Cantidad_mes actual ", consumo[3])
+        cantidad_mes = consumo[3] + row["mg_ml"]
+        # print("cantidad_mes luego de sumar",cantidad_mes)
         cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes,row["folio"],id_alimento))
     # cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))   
     mydb.commit()
