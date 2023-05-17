@@ -59,7 +59,7 @@ for index, row in df_consumo_alimentos.iterrows():
       cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     else :
         print("Entre porque id alimento: ",id_alimento)
-        print("columna mg_ml ", row["mg_ml"]
+        print("columna mg_ml ", row["mg_ml"])
         print("cantidad actual: ", consumo[2])
         cantidad = consumo[2] + row["mg_ml"]
         print("cantidad luego de sumar:", cantidad)
