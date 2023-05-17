@@ -19,12 +19,6 @@ cursor = mydb.cursor()
 col_consumo = ["folio", "homologado","consumo_mes", "mg_ml"]
 df_consumo_alimentos = pd.read_csv("../../csv/ENCA_ETCC_ALIMENTOS_INDIVIDUALES.csv", sep=",", header=0, usecols=col_consumo, encoding="ISO-8859-1")
 
-# Eliminar las filas donde la columna homologado esté vacía
-#df_consumo_alimentos.dropna(subset=['homologado'], inplace=True)
-
-# Actualizar el índice del DataFrame después de eliminar las filas
-#df_consumo_alimentos.reset_index(drop=True, inplace=True)
-
 # Imprimir el DataFrame
 print(df_consumo_alimentos)
 
@@ -32,11 +26,8 @@ print(df_consumo_alimentos)
 sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
 
 for index, row in df_consumo_alimentos.iterrows():
-    print(row["homologado"].strip().lower().replace(",",""))
+    print(row[folio],": ",row["homologado"].strip().lower().replace(",",""))
     # Obtener id categoria desde homologado
-
-    # cursor.execute("SELECT id FROM Categoria WHERE nombre=%s",(row["homologado"],))
-    # id_categoria = cursor.fetchall()[0][0]
     
     cursor.execute("SELECT id FROM Alimento WHERE nombre=%s", (row["homologado"].strip().lower().replace(",",""),))
     id_alimento = cursor.fetchall()
@@ -56,19 +47,10 @@ for index, row in df_consumo_alimentos.iterrows():
     consumo = cursor.fetchone()
 
     if consumo is None: 
-      # print("El alimento aun no habia sido ingresado")
-      # print("Col")
       cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
     else :
-        # print("Entre porque id alimento: ",id_alimento)
-        # print("columna consumo_mes ", row["consumo_mes"])
-        # print("cantidad actual: ", consumo[2])
         cantidad = consumo[2] + row["consumo_mes"]
-        # print("cantidad luego de sumar:", cantidad)
-        # print("columna mg_ml ", row["mg_ml"])
-        # print("Cantidad_mes actual ", consumo[3])
         cantidad_mes = consumo[3] + row["mg_ml"]
-        # print("cantidad_mes luego de sumar",cantidad_mes)
         cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes,row["folio"],id_alimento))
     # cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))   
     mydb.commit()
