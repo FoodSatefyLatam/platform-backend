@@ -25,6 +25,7 @@ print(df_consumo_alimentos)
 # Inserción de datos en la tabla Consumo
 sql_consumo = "INSERT INTO Consumo(id_persona, id_alimento, cantidad, cantidad_mes) VALUES (%s, %s, %s, %s)"
 
+
 for index, row in df_consumo_alimentos.iterrows():
     print(row["folio"],": ",row["homologado"].strip().lower().replace(",",""))
     # Obtener id categoria desde homologado
@@ -47,10 +48,10 @@ for index, row in df_consumo_alimentos.iterrows():
     consumo = cursor.fetchone()
 
     if consumo is None: 
-      cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))
+      cursor.execute(sql_consumo, (row["folio"], id_alimento, row["mg_ml"], row["consumo_mes"]))
     else :
-        cantidad = consumo[2] + row["consumo_mes"]
-        cantidad_mes = consumo[3] + row["mg_ml"]
+        cantidad = consumo[2] + row["mg_ml"]
+        cantidad_mes = consumo[3] + row["consumo_mes"]
         cursor.execute("UPDATE Consumo Set cantidad = %s , cantidad_mes = %s WHERE id_persona = %s AND id_alimento = %s",(cantidad,cantidad_mes,row["folio"],id_alimento))
     # cursor.execute(sql_consumo, (row["folio"], id_alimento, row["consumo_mes"], row["mg_ml"]))   
     mydb.commit()
