@@ -5,7 +5,7 @@ def contaminantes():
     cur = mysql.connection.cursor()
     lista_contaminantes = []
     if request.method == 'GET':
-        cur.execute("SELECT nombre FROM contaminante")
+        cur.execute("SELECT nombre FROM Contaminante")
         contaminantes = cur.fetchall()
         for contaminante in contaminantes:
             lista_contaminantes.append(contaminante[0])

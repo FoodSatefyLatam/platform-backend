@@ -5,7 +5,7 @@ def alimentos():
     cur = mysql.connection.cursor()
     lista_alimentos = []
     if request.method == 'GET':
-        cur.execute("SELECT especie FROM alimento")
+        cur.execute("SELECT nombre FROM Alimento")
         #consulta
         _alimentos = cur.fetchall()
         for alimento in _alimentos:
@@ -18,10 +18,9 @@ def alimentos():
         if request_json.get("contaminantes"):
             for contaminante in request_json.get("contaminantes"):
                 contaminantes.append(contaminante)
-            print(contaminantes)
             for contaminante in contaminantes:
                 cur = mysql.connection.cursor()
-                cur.execute("SELECT especie FROM alimento LEFT JOIN muestreo ON alimento.id_alimento=muestreo.id_alimento LEFT JOIN contaminante ON contaminante.id_contaminante=muestreo.id_contaminante WHERE contaminante.nombre = %s AND muestreo.cantidad != 0",[contaminante])
+                cur.execute("SELECT nombre FROM Alimento LEFT JOIN Muestra ON Alimento.id=Muestra.id_alimento LEFT JOIN Contaminante ON Contaminante.id=Muestra.id_contaminante WHERE Contaminante.nombre = %s AND Muesta.cantidad != 0",[contaminante])
                 _alimentos = cur.fetchall()
                 for alimento in _alimentos:
                     dict_alimentos[alimento[0]] = True

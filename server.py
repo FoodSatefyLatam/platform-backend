@@ -7,9 +7,9 @@ from flask_cors import CORS
 from flask_mysqldb import MySQL
 
 import alimentos
-import calculadora
+#import calculadora
 import contaminantes
-import reporte
+#import reporte
 
 load_dotenv('.env')
 
