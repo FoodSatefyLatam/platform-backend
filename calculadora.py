@@ -24,7 +24,7 @@ def calculadora():
     valor_referencia = cur.fetchone()
     print(valor_referencia)
     if(valor_referencia[0] is None):
-        valor_referencia = [0]
+        valor_referencia = [0.0]
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
     cur.execute("SELECT id FROM Alimento WHERE nombre=%s",[food]) 
@@ -33,7 +33,7 @@ def calculadora():
     promedio=cur.fetchone()
     print(promedio)
     if(promedio[0] is None):
-        promedio = [0]
+        promedio = [0.0]
 
-    formula = (amount * float(promedio[0]))/(float(valor_referencia[0]) * weight) #amount es la cantidad de alimento y weight el peso de la persona
+    formula = (float(amount) * float(promedio[0]))/(float(valor_referencia[0]) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     return jsonify(formula)   
