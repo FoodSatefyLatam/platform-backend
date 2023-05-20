@@ -20,7 +20,7 @@ def alimentos():
                 contaminantes.append(contaminante)
             for contaminante in contaminantes:
                 cur = mysql.connection.cursor()
-                cur.execute("SELECT Alimento.nombre FROM Alimento LEFT JOIN Muestra ON Alimento.id=Muestra.id_alimento LEFT JOIN Contaminante ON Contaminante.id=Muestra.id_contaminante WHERE Contaminante.nombre = %s AND Muesta.cantidad != 0",[contaminante])
+                cur.execute("SELECT Alimento.nombre FROM Alimento LEFT JOIN Muestra ON Alimento.id=Muestra.id_alimento LEFT JOIN Contaminante ON Contaminante.id=Muestra.id_contaminante WHERE Contaminante.nombre = %s AND Muestra.cantidad != 0",[contaminante])
                 _alimentos = cur.fetchall()
                 for alimento in _alimentos:
                     dict_alimentos[alimento[0]] = True
