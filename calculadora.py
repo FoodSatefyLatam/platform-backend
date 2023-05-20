@@ -35,6 +35,6 @@ def calculadora():
         promedio = [0.0]
     print(promedio)
     formula = 0.0
-    if(valor_referencia != 0 and weight != 0):
+    if(valor_referencia[0] != 0 and weight != 0):
         formula = (float(amount) * float(promedio[0]))/(float(valor_referencia[0]) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     return jsonify(formula)   
