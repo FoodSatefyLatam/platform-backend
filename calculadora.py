@@ -22,18 +22,17 @@ def calculadora():
     cur = mysql.connection.cursor()
     cur.execute("SELECT limite_diario FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
     valor_referencia = cur.fetchone()
-    print(valor_referencia)
     if(valor_referencia[0] is None):
         valor_referencia = [0.0]
+    print(valor_referencia)
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
     cur.execute("SELECT id FROM Alimento WHERE nombre=%s",[food]) 
     id_alimento=cur.fetchone()
     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminante],[id_alimento]))
     promedio=cur.fetchone()
-    print(promedio)
     if(promedio[0] is None):
         promedio = [0.0]
-
+    print(promedio)
     formula = (float(amount) * float(promedio[0]))/(float(valor_referencia[0]) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     return jsonify(formula)   
