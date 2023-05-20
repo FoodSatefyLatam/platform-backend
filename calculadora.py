@@ -23,7 +23,7 @@ def calculadora():
     cur.execute("SELECT limite_diario FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
     valor_referencia = cur.fetchone()
     print(valor_referencia)
-    if(valor_referencia == []):
+    if(valor_referencia is None):
         valor_referencia = [0]
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
@@ -32,7 +32,7 @@ def calculadora():
     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminante],[id_alimento]))
     promedio=cur.fetchone()
     print(promedio)
-    if(promedio == []):
+    if(promedio is None):
         promedio = [0]
 
     formula = (amount * float(promedio[0]))/(float(valor_referencia[0]) * weight) #amount es la cantidad de alimento y weight el peso de la persona
