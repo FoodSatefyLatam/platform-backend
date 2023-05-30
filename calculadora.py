@@ -41,6 +41,8 @@ def calculadora():
         promedio = 0.0
     else:
         promedio = promedio[0]
+    # a gramos
+    promedio = promedio * 0.000001
     print(promedio)
     formula = 0.0
     if(valor_referencia != 0 and weight != 0):
