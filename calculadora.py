@@ -30,7 +30,7 @@ def calculadora():
         valor_referencia = valor_referencia[0]
     # a gramos
     valor_referencia = valor_referencia * 0.000001
-    print(valor_referencia[0])
+    print(valor_referencia)
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
     cur.execute("SELECT id FROM Alimento WHERE nombre=%s",[food]) 
