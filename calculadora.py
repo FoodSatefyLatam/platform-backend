@@ -13,8 +13,6 @@ def calculadora():
             amount = request_json["amount"]
         if(request_json.get("food")):
             food = request_json["food"]
-        #kg a gramos
-        weight = weight * 1000
     except:
         return "Error"
 
@@ -28,8 +26,6 @@ def calculadora():
         valor_referencia = 0.0
     else:
         valor_referencia = valor_referencia[0]
-    # a gramos
-    valor_referencia = valor_referencia * 0.000001
     print(valor_referencia)
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
@@ -41,8 +37,6 @@ def calculadora():
         promedio = 0.0
     else:
         promedio = promedio[0]
-    # a gramos
-    promedio = promedio * 0.000001
     print(promedio)
     formula = 0.0
     if(valor_referencia != 0 and weight != 0):
