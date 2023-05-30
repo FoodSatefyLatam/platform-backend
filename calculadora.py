@@ -25,9 +25,11 @@ def calculadora():
     #los valores de referencia están en microgramos
     valor_referencia = cur.fetchone()
     if(valor_referencia[0] is None):
-        valor_referencia = [0.0]
+        valor_referencia = 0.0
+    else:
+        valor_referencia = valor_referencia[0]
     # a gramos
-    valor_referencia[0] = float(valor_referencia[0]) * 0.000001
+    valor_referencia = valor_referencia * 0.000001
     print(valor_referencia[0])
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
@@ -39,8 +41,8 @@ def calculadora():
         promedio = [0.0]
     print(promedio)
     formula = 0.0
-    if(valor_referencia[0] != 0 and weight != 0):
-        formula = (float(amount) * float(promedio[0]))/(float(valor_referencia[0]) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
+    if(valor_referencia != 0 and weight != 0):
+        formula = (float(amount) * float(promedio[0]))/(float(valor_referencia) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     if(formula < 1.0):
         return jsonify({'valor': 'bien'})
     else:
