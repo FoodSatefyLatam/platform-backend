@@ -13,7 +13,6 @@ def calculadora():
             amount = request_json["amount"]
         if(request_json.get("food")):
             food = request_json["food"]
-    
     except:
         return "Error"
 
@@ -37,4 +36,8 @@ def calculadora():
     formula = 0.0
     if(valor_referencia[0] != 0 and weight != 0):
         formula = (float(amount) * float(promedio[0]))/(float(valor_referencia[0]) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
+    if(formula < 1.0):
+        return jsonify("'valor': 'bien'")
+    else:
+        return jsonify("'valor': 'mal'")
     return jsonify(formula)   
