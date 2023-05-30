@@ -13,6 +13,8 @@ def calculadora():
             amount = request_json["amount"]
         if(request_json.get("food")):
             food = request_json["food"]
+        #kg a gramos
+        weight = weight * 1000
     except:
         return "Error"
 
@@ -20,9 +22,12 @@ def calculadora():
     contaminante="Cd"
     cur = mysql.connection.cursor()
     cur.execute("SELECT limite_diario FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
+    #los valores de referencia están en microgramos
     valor_referencia = cur.fetchone()
     if(valor_referencia[0] is None):
         valor_referencia = [0.0]
+    # a gramos
+    valor_referencia = valor_referencia * 0.000001
     print(valor_referencia)
     cur.execute("SELECT id FROM Contaminante WHERE nombre= %s",[contaminante])
     id_contaminante = cur.fetchone()
