@@ -38,13 +38,15 @@ def calculadora():
     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminante],[id_alimento]))
     promedio=cur.fetchone()
     if(promedio[0] is None):
-        promedio = [0.0]
+        promedio = 0.0
+    else:
+        promedio = promedio[0]
     print(promedio)
     formula = 0.0
     if(valor_referencia != 0 and weight != 0):
-        formula = (float(amount) * float(promedio[0]))/(float(valor_referencia) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
+        formula = (float(amount) * float(promedio))/(float(valor_referencia) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     if(formula < 1.0):
-        return jsonify({'valor': 'bien'})
+        return jsonify({'estado': 'bien', 'valor': formula})
     else:
-        return jsonify({'valor': 'mal'})
+        return jsonify({'estado': 'mal','valor': formula})
     return jsonify(formula)   
