@@ -8,5 +8,5 @@ def contaminantes():
         cur.execute("SELECT nombre, alias FROM Contaminante")
         contaminantes = cur.fetchall()
         for contaminante in contaminantes:
-            lista_contaminantes.append({"nombre":contaminante[0],"alias": contaminante[1]})
+            lista_contaminantes.append({"nombre":contaminante[0],"alias": contaminante[1].replace(" (mg/Kg)", "")})
     return jsonify(lista_contaminantes)
