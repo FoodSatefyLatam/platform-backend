@@ -9,6 +9,4 @@ def contaminantes():
         contaminantes = cur.fetchall()
         for contaminante in contaminantes:
             lista_contaminantes.append({"nombre":contaminante[0],"alias": contaminante[1]})
-        
-    lista_contaminantes.sort()
     return jsonify(lista_contaminantes)
