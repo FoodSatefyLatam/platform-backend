@@ -14,8 +14,6 @@ def calculadora():
             amount = request_json["amount"]
         if(request_json.get("food")):
             food = request_json["food"]
-        if(request_json.get("contaminante")):
-            contaminante = request_json["contaminante"]
         amount = amount / 1000.0
     except:
         return "Error"
