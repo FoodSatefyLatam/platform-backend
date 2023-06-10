@@ -6,7 +6,7 @@ def calculadora():
         weight = 0
         amount = 0
         food = ""
-        contaminante = "Cd"
+        
         request_json = request.get_json()
         if(request_json.get("weight")):
             weight = request_json["weight"]
@@ -18,6 +18,7 @@ def calculadora():
     except:
         return "Error"
 
+    contaminante = "Cd"
     #aqui saca los datos del contaminante
     cur = mysql.connection.cursor()
     cur.execute("SELECT limite_diario FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
