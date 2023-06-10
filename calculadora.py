@@ -7,13 +7,18 @@ def calculadora():
     amount = 0
     food = ""
     try:
+        print("a")
         request_json = request.get_json()
+        print("a")
         if(request_json.get("weight")):
             weight = request_json["weight"]
+        print("a")
         if(request_json.get("amount")):
             amount = request_json["amount"]
+        print("a")
         if(request_json.get("food")):
             food = request_json["food"]
+        print("a")
         amount /= 1000.0
     except:
         return "Error"
