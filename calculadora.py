@@ -5,7 +5,8 @@ def calculadora():
     try:
         weight = 0
         amount = 0
-        food = "" 
+        food = ""
+        contaminante = "Cd"
         request_json = request.get_json()
         if(request_json.get("weight")):
             weight = request_json["weight"]
@@ -13,12 +14,13 @@ def calculadora():
             amount = request_json["amount"]
         if(request_json.get("food")):
             food = request_json["food"]
+        if(request_json.get("contaminante")):
+            food = request_json["contaminante"]
         amount = amount / 1000.0
     except:
         return "Error"
 
     #aqui saca los datos del contaminante
-    contaminante="Cd"
     cur = mysql.connection.cursor()
     cur.execute("SELECT limite_diario FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
     #los valores de referencia están en microgramos
@@ -43,6 +45,6 @@ def calculadora():
     if(valor_referencia != 0 and weight != 0):
         formula = (float(amount) * float(promedio))/(float(valor_referencia) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     if(formula < 1.0):
-        return jsonify({'estado': 'bien', 'formula': formula, 'valor_promedio': valor_referencia})
+        return jsonify({'estado': 'bien', 'formula': formula, 'contaminantes_promedio': valor_referencia})
     else:
-        return jsonify({'estado': 'mal', 'formula': formula, 'valor_promedio': valor_referencia})
+        return jsonify({'estado': 'mal', 'formula': formula, 'contaminantes_promedio': valor_referencia})
