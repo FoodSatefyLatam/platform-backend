@@ -62,12 +62,18 @@ PROYECTO DESARROLLO DE SOFTWARE I
 > "weight": "peso", 
 > "amount": "cantidad", 
 > "food": "alimento"
+> "contaminante": "nombre_contaminante"
 >}
 >```
 >
 >Retorna:
 >```
->["resultado"]
+>{
+> "estado": "bien/mal",
+> "formula": resultado de formula,
+> "contaminantes_promedio": cantidad de contaminante promedio del alimento
+>}
+>
 >```
 
 ### Reporte 📄
