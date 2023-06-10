@@ -43,7 +43,6 @@ def calculadora():
     if(valor_referencia != 0 and weight != 0):
         formula = (float(amount) * float(promedio))/(float(valor_referencia) * float(weight)) #amount es la cantidad de alimento y weight el peso de la persona
     if(formula < 1.0):
-        return jsonify({'estado': 'bien', 'valor': formula})
+        return jsonify({'estado': 'bien', 'formula': formula, 'valor_promedio': valor_referencia})
     else:
-        return jsonify({'estado': 'mal','valor': formula})
-    return jsonify(formula)   
+        return jsonify({'estado': 'mal', 'formula': formula, 'valor_promedio': valor_referencia})
