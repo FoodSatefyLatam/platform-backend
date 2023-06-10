@@ -2,11 +2,11 @@ from __main__ import app, mysql, request, jsonify
 
 @app.route("/calculadora", methods = ['POST'])
 def calculadora():
+    contaminante = "Cd"
+    weight = 0
+    amount = 0
+    food = ""
     try:
-        weight = 0
-        amount = 0
-        food = ""
-        
         request_json = request.get_json()
         if(request_json.get("weight")):
             weight = request_json["weight"]
@@ -14,11 +14,11 @@ def calculadora():
             amount = request_json["amount"]
         if(request_json.get("food")):
             food = request_json["food"]
-        amount = amount / 1000.0
+        amount /= 1000.0
     except:
         return "Error"
 
-    contaminante = "Cd"
+    
     #aqui saca los datos del contaminante
     cur = mysql.connection.cursor()
     cur.execute("SELECT limite_diario FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
