@@ -78,7 +78,7 @@ def reporte():
                 reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
 
     
-    print(reporte)
+    print(str(reporte))
 
     for contaminante in contaminantes:
         promedio_contaminante = 0
