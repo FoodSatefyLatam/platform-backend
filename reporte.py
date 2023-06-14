@@ -33,7 +33,7 @@ def reporte():
         reporte[contaminante]["promedio contaminante"] = 0
         cur.execute("SELECT limite_diario, id FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
-        if(res[0][0]!= ""):
+        if(res[0] is not None):
             valores_referencia[contaminante] = res[0][0]
             id_contaminantes[contaminante] = res[0][1]
 
