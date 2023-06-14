@@ -77,7 +77,8 @@ def reporte():
                 reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
                 reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
 
-
+    
+    print(reporte)
 
     for contaminante in contaminantes:
         promedio_contaminante = 0
