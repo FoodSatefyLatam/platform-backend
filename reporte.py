@@ -39,7 +39,9 @@ def reporte():
             valores_referencia[contaminante] = res[0][0]
             id_contaminantes[contaminante] = res[0][1]
 
+    reporte[contaminante]["alimento"] = {}
     for alimento in alimentos:
+        reporte[contaminante]["alimento"][alimento] = {}
         for contaminante in contaminantes:
             formula = 0.0
             c_personas = 0
