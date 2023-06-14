@@ -87,7 +87,7 @@ def reporte():
         for alimento  in alimentos:
             if(not alimento in id_alimentos):
                 continue
-            if(alimento in reporte[contaminante]["alimento"]):
+            if("promedio_alimento" in reporte[contaminante]["alimento"][alimento]):
                 promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
         
         reporte[contaminante]["promedio contaminante"] = promedio_contaminante
