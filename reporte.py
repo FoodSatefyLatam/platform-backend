@@ -62,7 +62,7 @@ def reporte():
 
             for persona in personas:
                 formula_actual = (float(persona[2]/30)/1000.0 * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[1]))
-                if(formula_actual  > max_formula["valor formula peor caso"]):
+                if(formula_actual  > max_formula):
                     max_formula= formula_actual
 
                 formula += formula_actual
