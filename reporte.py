@@ -76,8 +76,8 @@ def reporte():
 
     for contaminante in contaminantes:
         promedio_contaminante = 0
-        for alimento  in reporte[contaminante]["alimento"]:
-            promedio_contaminante += alimento["promedio_alimento"]
+        for alimento  in alimentos:
+            promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
         
         reporte[contaminante]["promedio_contaminante"] = promedio_contaminante
 
