@@ -25,7 +25,7 @@ def reporte():
     for alimento in alimentos:
         cur.execute("SELECT id FROM Alimento WHERE nombre = %s",[alimento])
         res = cur.fetchall()
-        if(res[0][0] != ""):
+        if(res[0] is not None):
             id_alimentos[alimento] = res[0][0]
         
     for contaminante in contaminantes:
