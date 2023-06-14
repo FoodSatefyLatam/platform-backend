@@ -31,7 +31,6 @@ def reporte():
     for contaminante in contaminantes:
         reporte[contaminante] = {}
         reporte[contaminante]["promedio contaminante"] = 0
-        reporte[contaminante]["alimentos"] = {}
         cur.execute("SELECT limite_diario, id FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
         if(res[0][0]!= ""):
@@ -83,7 +82,8 @@ def reporte():
     for contaminante in contaminantes:
         promedio_contaminante = 0
         for alimento  in alimentos:
-            promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
+            if(alimento in reporte[contaminante]["alimento"]):
+                promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
         
         reporte[contaminante]["promedio contaminante"] = promedio_contaminante
 
