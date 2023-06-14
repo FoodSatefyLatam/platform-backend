@@ -40,13 +40,8 @@ def reporte():
 
     reporte[contaminante]["alimento"] = {}
     for alimento in alimentos:
-        if(id_alimentos[alimento] == None):
-            continue
         reporte[contaminante]["alimento"][alimento] = {}
-        
         for contaminante in contaminantes:
-            if(id_contaminantes[contaminantes] == None):
-                continue
 
             formula = 0.0
             c_personas = 0
