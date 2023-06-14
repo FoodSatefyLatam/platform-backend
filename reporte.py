@@ -23,7 +23,7 @@ def reporte():
     id_contaminantes = {}
     id_alimentos = {}
     for alimento in alimentos:
-        cur.execute("SELECT id FROM Alimento WHERE nombre= %s",[alimento])
+        cur.execute("SELECT id FROM Alimento WHERE nombre = %s",[alimento])
         res = cur.fetchall()
         if(res[0][0]!= ""):
             id_alimentos[alimento] = res[0][0]
@@ -33,7 +33,7 @@ def reporte():
         reporte[contaminante]["promedio contaminante"] = 0
         reporte[contaminante]["cantidad de alimentos considerados"] = 0
         reporte[contaminante]["alimentos"] = {}
-        cur.execute("SELECT valor_referencia, id_contaminante FROM contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
+        cur.execute("SELECT valor_referencia, id_contaminante FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
         if(res[0][0]!= ""):
             valores_referencia[contaminante] = res[0][0]
