@@ -45,7 +45,7 @@ def reporte():
             c_personas = 0
             max_formula = 0.0
 
-            if float(valores_referencia[contaminante]) == 0.0: 
+            if  valores_referencia[contaminante] == None or float(valores_referencia[contaminante]) == 0.0: 
                 continue
 
             cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimentos[alimento]]))
