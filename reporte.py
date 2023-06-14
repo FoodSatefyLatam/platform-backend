@@ -31,7 +31,6 @@ def reporte():
     for contaminante in contaminantes:
         reporte[contaminante] = {}
         reporte[contaminante]["promedio contaminante"] = 0
-        reporte[contaminante]["cantidad de alimentos considerados"] = 0
         reporte[contaminante]["alimentos"] = {}
         cur.execute("SELECT limite_diario, id FROM Contaminante WHERE nombre= %s",[contaminante]) #de momento se trabaja con el cadmio
         res = cur.fetchall()
@@ -72,6 +71,11 @@ def reporte():
                 reporte[contaminante]["alimento"][alimento]["peor_caso"] = max_formula
                 reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
                 reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = (formula/c_personas)
+            else:
+                reporte[contaminante]["alimento"][alimento]["peor_caso"] = 0
+                reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
+                reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
+
 
 
     for contaminante in contaminantes:
@@ -79,7 +83,7 @@ def reporte():
         for alimento  in alimentos:
             promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
         
-        reporte[contaminante]["promedio_contaminante"] = promedio_contaminante
+        reporte[contaminante]["promedio contaminante"] = promedio_contaminante
 
     
     return jsonify(reporte)
