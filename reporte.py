@@ -25,7 +25,7 @@ def reporte():
     for alimento in alimentos:
         cur.execute("SELECT id FROM Alimento WHERE nombre = %s",[alimento])
         res = cur.fetchall()
-        if(res[0][0]!= ""):
+        if(res[0][0] != ""):
             id_alimentos[alimento] = res[0][0]
         
     for contaminante in contaminantes:
@@ -40,8 +40,14 @@ def reporte():
 
     reporte[contaminante]["alimento"] = {}
     for alimento in alimentos:
+        if(id_alimentos[alimento] == None):
+            continue
         reporte[contaminante]["alimento"][alimento] = {}
+        
         for contaminante in contaminantes:
+            if(id_contaminantes[contaminantes] == None):
+                continue
+
             formula = 0.0
             c_personas = 0
             max_formula = 0.0
@@ -79,8 +85,12 @@ def reporte():
 
 
     for contaminante in contaminantes:
+        if(id_contaminantes[contaminantes] == None):
+            continue
         promedio_contaminante = 0
         for alimento  in alimentos:
+            if(id_alimentos[alimento] == None):
+                continue
             promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
         
         reporte[contaminante]["promedio contaminante"] = promedio_contaminante
