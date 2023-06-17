@@ -10,7 +10,7 @@ def reporte():
     sexo = request_json["sexo"]
     s = ""
     if(sexo != "0"):
-        s = "sexo="+sexo+" AND"
+        s = "sexo="+ sexo +" AND"
     min_edad = request_json["min_edad"]
     max_edad = request_json["max_edad"]
     min_peso = request_json["min_peso"]
@@ -59,7 +59,7 @@ def reporte():
             if(promedio_contaminante == None):
                 promedio_contaminante = 0.0
 
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s;",[min_edad, max_edad, min_peso, max_peso, min_altura, max_altura, id_alimentos[alimento]])
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s AND Consumo.cantidad_mes != 0.0;",[min_edad, max_edad, min_peso, max_peso, min_altura, max_altura, id_alimentos[alimento]])
 
             personas = cur.fetchall()
 
