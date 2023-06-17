@@ -37,48 +37,51 @@ def reporte():
             valores_referencia[contaminante] = res[0][0]
             id_contaminantes[contaminante] = res[0][1]
 
-    reporte[contaminante]["alimento"] = {}
-    for alimento in alimentos:
-        if(not alimento in id_alimentos):
+    for contaminante in contaminantes:
+        if(not contaminante in id_contaminantes):
             continue
-        reporte[contaminante]["alimento"][alimento] = {}
-        for contaminante in contaminantes:
-            if(not contaminante in id_contaminantes):
+        reporte[contaminante]["alimento"] = {}
+        for alimento in alimentos:
+            if(not alimento in id_alimentos):
                 continue
+            reporte[contaminante]["alimento"][alimento] = {}
+            for contaminante in contaminantes:
+                if(not contaminante in id_contaminantes):
+                    continue
 
-            formula = 0.0
-            c_personas = 0
-            max_formula = 0.0
+                formula = 0.0
+                c_personas = 0
+                max_formula = 0.0
 
-            if  valores_referencia[contaminante] == None or float(valores_referencia[contaminante]) == 0.0: 
-                continue
+                if  valores_referencia[contaminante] == None or float(valores_referencia[contaminante]) == 0.0: 
+                    continue
 
-            cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimentos[alimento]]))
-            promedio_contaminante = cur.fetchone()[0]
+                cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimentos[alimento]]))
+                promedio_contaminante = cur.fetchone()[0]
 
-            if(promedio_contaminante == None):
-                promedio_contaminante = 0.0
+                if(promedio_contaminante == None):
+                    promedio_contaminante = 0.0
 
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s AND Consumo.cantidad_mes != 0.0;",[min_edad, max_edad, min_peso, max_peso, min_altura, max_altura, id_alimentos[alimento]])
+                cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s AND Consumo.cantidad_mes != 0.0;",[min_edad, max_edad, min_peso, max_peso, min_altura, max_altura, id_alimentos[alimento]])
 
-            personas = cur.fetchall()
+                personas = cur.fetchall()
 
-            for persona in personas:
-                formula_actual = (float(persona[2]/30)/1000.0 * float(promedio_contaminante))/(float(valores_referencia[contaminante]) * float(persona[1]))
-                if(formula_actual  > max_formula):
-                    max_formula= formula_actual
+                for persona in personas:
+                    formula_actual = (float(persona[2]/30)/1000.0 * float(promedio_contaminante))/(float(valores_referencia[contaminante]) * float(persona[1]))
+                    if(formula_actual  > max_formula):
+                        max_formula= formula_actual
 
-                formula += formula_actual
-                c_personas += 1
-            
-            if(c_personas != 0):
-                reporte[contaminante]["alimento"][alimento]["peor_caso"] = max_formula
-                reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
-                reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = (formula/c_personas)
-            else:
-                reporte[contaminante]["alimento"][alimento]["peor_caso"] = 0
-                reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
-                reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
+                    formula += formula_actual
+                    c_personas += 1
+                
+                if(c_personas != 0):
+                    reporte[contaminante]["alimento"][alimento]["peor_caso"] = max_formula
+                    reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
+                    reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = (formula/c_personas)
+                else:
+                    reporte[contaminante]["alimento"][alimento]["peor_caso"] = 0
+                    reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
+                    reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
 
     
     print(str(reporte))
