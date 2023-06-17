@@ -54,20 +54,17 @@ def reporte():
                 continue
 
             cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimentos[alimento]]))
-            promedio_contaminate = cur.fetchone()[0]
+            promedio_contaminante = cur.fetchone()[0]
 
-            if(promedio_contaminate == None):
-                print("hola")
+            if(promedio_contaminante == None):
                 promedio_contaminante = 0.0
-            else:
-                print(promedio_contaminante)
 
             cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s;",[min_edad, max_edad, min_peso, max_peso, min_altura, max_altura, id_alimentos[alimento]])
 
             personas = cur.fetchall()
 
             for persona in personas:
-                formula_actual = (float(persona[2]/30)/1000.0 * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[1]))
+                formula_actual = (float(persona[2]/30)/1000.0 * float(promedio_contaminante))/(float(valores_referencia[contaminante]) * float(persona[1]))
                 if(formula_actual  > max_formula):
                     max_formula= formula_actual
 
