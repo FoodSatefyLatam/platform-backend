@@ -40,10 +40,11 @@ def reporte():
     for contaminante in contaminantes:
         if(not contaminante in id_contaminantes):
             continue
-        reporte[contaminante]["alimento"] = {}
+        reporte[contaminante] = {}
         for alimento in alimentos:
             if(not alimento in id_alimentos):
                 continue
+            reporte[contaminante]["alimento"] = {}
             reporte[contaminante]["alimento"][alimento] = {}
             for contaminante in contaminantes:
                 if(not contaminante in id_contaminantes):
