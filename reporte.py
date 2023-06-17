@@ -64,6 +64,10 @@ def reporte():
             personas = cur.fetchall()
 
             for persona in personas:
+                print(persona[2])
+                print(promedio_contaminate)
+                print(valores_referencia[contaminante])
+                print(persona[1])
                 formula_actual = (float(persona[2]/30)/1000.0 * float(promedio_contaminate))/(float(valores_referencia[contaminante]) * float(persona[1]))
                 if(formula_actual  > max_formula):
                     max_formula= formula_actual
