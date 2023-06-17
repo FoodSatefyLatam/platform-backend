@@ -81,7 +81,7 @@ def reporte():
                 reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
 
     
-    print(jsonify(reporte))
+    print(str(reporte))
 
     for contaminante in contaminantes:
         if(not contaminante in id_contaminantes):
