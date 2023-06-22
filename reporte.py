@@ -2,7 +2,7 @@ import openpyxl
 
 from __main__ import app, mysql, request, jsonify
 
-@app.route("/reporte", methods=["POST"])
+@app.route("/reporte", methods=["POST, GET"])
 def reporte():
     cur = mysql.connection.cursor()
     if request.method == "POST":
