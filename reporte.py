@@ -102,16 +102,22 @@ def reporte():
     
     elif request.method == "GET":
         respuesta = {}
+        nombre_alimentos = {}
+        cur.execute("SELECT * FROM Alimenetos;")
+        alimentos = cur.fetchall()
+        for alimento in alimentos:
+            nombre_alimentos[alimento[0]] = alimento[1]
+
         cur.execute("SELECT * FROM Consumo;")
         consumos = cur.fetchall()
         for consumo in consumos:
             if consumo[0] in respuesta:
                 if(consumo[3] != 0.0):
-                    respuesta[consumo[0]][consumo[1]] = consumo[3]
+                    respuesta[consumo[0]][nombre_alimentos[consumo[1]]] = consumo[3]
             else:
                 respuesta[consumo[0]] = {}
                 if(consumo[3] != 0.0):
-                    respuesta[consumo[0]][consumo[1]] = consumo[3]
+                    respuesta[consumo[0]][nombre_alimentos[consumo[1]]] = consumo[3]
         return jsonify(respuesta)
     
     else:
