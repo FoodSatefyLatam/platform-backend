@@ -103,7 +103,7 @@ def reporte():
     elif request.method == "GET":
         respuesta = {}
         nombre_alimentos = {}
-        cur.execute("SELECT * FROM Alimentos;")
+        cur.execute("SELECT * FROM Alimento;")
         alimentos = cur.fetchall()
         for alimento in alimentos:
             nombre_alimentos[alimento[0]] = alimento[1]
