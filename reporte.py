@@ -101,9 +101,16 @@ def reporte():
         return jsonify(reporte)
     
     elif request.method == "GET":
+        respuesta = {}
         cur.execute("SELECT * FROM Consumo;")
         consumos = cur.fetchall()
-        return consumos.toString()
+        for consumo in consumos:
+            if consumo[0] in respuesta:
+                respuesta[consumo[0]][consumo[1]] = consumo[3]
+            else:
+                respuesta[consumo[0]] = {}
+                respuesta[consumo[0]][consumo[1]] = consumo[3]
+        return jsonify(respuesta)
     
     else:
         return "Error"
