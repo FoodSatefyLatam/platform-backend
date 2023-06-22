@@ -106,10 +106,12 @@ def reporte():
         consumos = cur.fetchall()
         for consumo in consumos:
             if consumo[0] in respuesta:
-                respuesta[consumo[0]][consumo[1]] = consumo[3]
+                if(consumo[3] != 0.0):
+                    respuesta[consumo[0]][consumo[1]] = consumo[3]
             else:
                 respuesta[consumo[0]] = {}
-                respuesta[consumo[0]][consumo[1]] = consumo[3]
+                if(consumo[3] != 0.0):
+                    respuesta[consumo[0]][consumo[1]] = consumo[3]
         return jsonify(respuesta)
     
     else:
