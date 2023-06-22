@@ -100,7 +100,7 @@ def reporte():
             
         return jsonify(reporte)
     
-    elif request.method == "POST":
+    elif request.method == "GET":
         cur.execute("SELECT * FROM Consumo;")
         consumos = cur.fetchall()
         return consumos
