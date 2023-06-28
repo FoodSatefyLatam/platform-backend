@@ -70,7 +70,8 @@ def reporte():
 
         for region in regiones:
             reporte_region = {
-                "region":region["id"]
+                "region":region["id"],
+                "personas": 0
             }
             sql_comunas = "comuna_id = " + str(region["comunas"][0])
             for comuna in region["comunas"]:
@@ -89,6 +90,7 @@ def reporte():
             avg_contaminantes = {}
             for consumo in res:
                 if not consumo[0] in personas:
+                    reporte_region["personas"] += 1
                     avg_peso += consumo[1]
                     personas[consumo[0]] = "ok"
                 for contaminante in contaminantes:
@@ -99,18 +101,16 @@ def reporte():
                         continue
                     avg_contaminantes[contaminante["nombre"]] += (alimento[0][contaminante["nombre"]] * consumo[2])/(30*1000)
 
-            avg_peso =  avg_peso /len(personas)
+            avg_peso =  avg_peso / reporte_region["personas"]
             
             formula = {}
             for contaminante in contaminantes:
-                avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]]/ len(personas)
+                avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]]/ reporte_region["personas"]
                 if contaminante["limite_diario"] == None:
                     formula[contaminante["nombre"]] = "Sin Datos de limite diario"
                 else:
                     formula[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / (avg_peso * contaminante["limite_diario"])
 
-
-            reporte_region["personas"] = len(personas)
             reporte_region["prom_peso"] = avg_peso
             reporte_region["prom_contaminantes"] = avg_contaminantes
             reporte_region["formula"] = formula
