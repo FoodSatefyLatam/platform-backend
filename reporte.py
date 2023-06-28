@@ -92,6 +92,7 @@ def reporte():
                     personas[consumo[0]] = "ok"
                 for contaminante in contaminantes:
                     alimento = filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos)
+                    print(alimento)
                     if(alimento[contaminante["nombre"]] == None):
                         print("sin datos")
                         continue
