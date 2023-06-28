@@ -88,8 +88,8 @@ def reporte():
                 if not consumo[0] in personas:
                     avg_peso += consumo[1]
                     personas[consumo[0]] = "ok"
-
                 for contaminante in contaminantes:
+                    avg_peso+=1
 
                 
                 
