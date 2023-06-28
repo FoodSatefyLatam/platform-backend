@@ -66,17 +66,17 @@ def reporte():
         print(sql_alimentos)
 
         for region in regiones:
-            sql_comunas = "p.id_comuna = " + str(region["comunas"][0])
+            sql_comunas = "id_comuna = " + str(region["comunas"][0])
             for comuna in region["comunas"]:
                 if(comuna == region["comunas"][0]): 
                     continue
                 else:
-                    sql_comunas += " OR p.id_comuna = " + str(comuna)
+                    sql_comunas += " OR id_comuna = " + str(comuna)
             
             print(sql_comunas)
-            #cur.execute()
             
-            #cur.execute("SELECT p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s;",[min_edad, max_edad, min_peso, max_peso, alimento["id"]])
+            cur.execute("SELECT ARG(p.peso), AVG(Consumo.cantidad_mes) FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso, alimento["id"]])
+            print(cur.fetchall())
 
 
         return jsonify(reporte)
