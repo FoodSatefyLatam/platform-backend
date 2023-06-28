@@ -21,7 +21,7 @@ def reporte():
         cur.execute("SELECT id, nombre, limite_diario FROM Contaminante")
         res = cur.fetchall()
         for contaminante in res:
-            contaminantes += {"id":contaminante[0], "nombre": contaminante[1], "limite_diario": contaminante[2]} 
+            contaminantes += {"id":res[0], "nombre": res[1], "limite_diario": res[2]} 
 
         print(contaminantes)
 
@@ -39,7 +39,7 @@ def reporte():
                     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([contaminante["id"]],[alimento["id"]]))
         
         print(alimentos)
-        
+
         return jsonify(reporte)
     
     elif request.method == "GET":
