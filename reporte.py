@@ -12,22 +12,23 @@ def reporte():
         s = ""
         if(sexo != "0"):
             s = "sexo="+ sexo +" AND"
-        min_edad = request_json["min_edad"]
-        max_edad = request_json["max_edad"]
-        min_peso = request_json["min_peso"]
-        max_peso = request_json["max_peso"]
-        min_altura = request_json["min_altura"]
-        max_altura = request_json["max_altura"]
+        min_edad = request_json["edad"][0]
+        max_edad = request_json["edad"][1]
+        min_peso = request_json["peso"][0]
+        max_peso = request_json["peso"][1]
         alimentos = request_json.get("alimentos")
         contaminantes = request_json.get("contaminantes")
         valores_referencia = {}
         id_contaminantes = {}
-        id_alimentos = {}
         for alimento in alimentos:
-            cur.execute("SELECT id FROM Alimento WHERE nombre = %s",[alimento])
+            cur.execute("SELECT id FROM Alimento WHERE nombre = %s",[alimento["nombre"]])
             res = cur.fetchall()
             if(res[0] is not None):
-                id_alimentos[alimento] = res[0][0]
+                alimento["id"] = res[0][0]
+            else:
+                return "error: alimento " + alimento["nombre"] + " no encontrado."
+        
+        print(alimentos.to_string())
             
         for contaminante in contaminantes:
             reporte[contaminante] = {}
@@ -44,8 +45,6 @@ def reporte():
 
             reporte[contaminante]["alimento"] = {}
             for alimento in alimentos:
-                if(not alimento in id_alimentos):
-                    continue
 
                 reporte[contaminante]["alimento"][alimento] = {}
                 
@@ -56,13 +55,13 @@ def reporte():
                 if  valores_referencia[contaminante] == None or float(valores_referencia[contaminante]) == 0.0: 
                     continue
 
-                cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[id_alimentos[alimento]]))
+                cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([id_contaminantes[contaminante]],[alimento["id"]]))
                 promedio_contaminante = cur.fetchone()[0]
 
                 if(promedio_contaminante == None):
                     promedio_contaminante = 0.0
 
-                cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND altura > %s AND altura < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s AND Consumo.cantidad_mes != 0.0;",[min_edad, max_edad, min_peso, max_peso, min_altura, max_altura, id_alimentos[alimento]])
+                cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s AND Consumo.cantidad_mes != 0.0;",[min_edad, max_edad, min_peso, max_peso, alimento["id"]])
 
                 personas = cur.fetchall()
 
@@ -82,7 +81,6 @@ def reporte():
                     reporte[contaminante]["alimento"][alimento]["peor_caso"] = 0
                     reporte[contaminante]["alimento"][alimento]["cantidad_de_personas"] = c_personas
                     reporte[contaminante]["alimento"][alimento]["promedio_alimento"] = 0
-
         
         print(str(reporte))
 
@@ -91,8 +89,6 @@ def reporte():
                 continue
             promedio_contaminante = 0
             for alimento  in alimentos:
-                if(not alimento in id_alimentos):
-                    continue
                 if("promedio_alimento" in reporte[contaminante]["alimento"][alimento]):
                     promedio_contaminante += reporte[contaminante]["alimento"][alimento]["promedio_alimento"]
 
