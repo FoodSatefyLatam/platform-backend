@@ -81,7 +81,7 @@ def reporte():
                     sql_comunas += " OR comuna_id = " + str(comuna)
             
             #print(sql_comunas)
-            
+            print("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
