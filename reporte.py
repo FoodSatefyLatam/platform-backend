@@ -91,11 +91,15 @@ def reporte():
                     avg_peso += consumo[1]
                     personas[consumo[0]] = "ok"
                 for contaminante in contaminantes:
-                    avg_peso+=1
+                    if not contaminante["nombre"] in avg_contaminantes:
+                        avg_contaminantes[contaminante["nombre"]] = 1
+                    else:
+                        avg_contaminantes[contaminante["nombre"]] += 1
+            avg_peso =  avg_peso /len(personas)
+                
+            reporte_region["personas"] = len(personas)
+            reporte_region["prom_peso"] = avg_peso
 
-                
-                
-                
             reporte.append(reporte_region)
 
         return jsonify(reporte)
