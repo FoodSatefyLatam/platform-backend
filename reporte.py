@@ -28,7 +28,7 @@ def reporte():
             else:
                 return "error: alimento " + alimento["nombre"] + " no encontrado."
         
-        print(alimentos.to_string())
+        print(alimentos)
             
         for contaminante in contaminantes:
             reporte[contaminante] = {}
