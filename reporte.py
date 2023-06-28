@@ -48,12 +48,12 @@ def reporte():
 
         print(regiones)
 
-        sql_alimentos = "Consumo.id_alimento = " + alimentos[0]["id"]
+        sql_alimentos = "Consumo.id_alimento = " + str(alimentos[0]["id"])
         for alimentos in alimentos:
             if(alimento == alimentos[0]): 
                 continue
             else:
-                sql_alimentos+= " OR Consumo.id_alimento = " + alimento["id"]
+                sql_alimentos+= " OR Consumo.id_alimento = " + str(alimento["id"])
         
         print(sql_alimentos)
 
