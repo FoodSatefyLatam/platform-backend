@@ -68,7 +68,9 @@ def reporte():
         #print(sql_alimentos)
 
         for region in regiones:
-            reporte_region = {}
+            reporte_region = {
+                "region":region["id"]
+            }
             sql_comunas = "comuna_id = " + str(region["comunas"][0])
             for comuna in region["comunas"]:
                 if(comuna == region["comunas"][0]): 
