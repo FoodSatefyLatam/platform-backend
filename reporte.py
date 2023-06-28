@@ -97,9 +97,9 @@ def reporte():
                         print("sin datos")
                         continue
                     if not contaminante["nombre"] in avg_contaminantes:
-                        avg_contaminantes[contaminante["nombre"]] = (alimento[0][contaminante["nombre"]] * consumo[2])/1000
+                        avg_contaminantes[contaminante["nombre"]] = (alimento[0][contaminante["nombre"]] * consumo[2])/(30*1000)
                     else:
-                        avg_contaminantes[contaminante["nombre"]] += (alimento[0][contaminante["nombre"]] * consumo[2])/1000
+                        avg_contaminantes[contaminante["nombre"]] += (alimento[0][contaminante["nombre"]] * consumo[2])/(30*1000)
 
             avg_peso =  avg_peso /len(personas)
                 
