@@ -99,22 +99,20 @@ def reporte():
                     avg_contaminantes[contaminante["nombre"]] += (alimento[0][contaminante["nombre"]] * consumo[2])/(30*1000)
 
             avg_peso =  avg_peso /len(personas)
-
-            reporte_region["personas"] = len(personas)
-            reporte_region["prom_peso"] = avg_peso
-
-            for _p_c in avg_contaminantes:
-                _p_c = _p_c/len(personas)
-
-            reporte_region["prom_contaminantes"] = avg_contaminantes
             
             formula = {}
             for contaminante in contaminantes:
+                avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]]/ len(personas)
                 if contaminante["limite_diario"] == None:
                     formula[contaminante["nombre"]] = "Sin Datos de limite diario"
                 else:
                     formula[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / (avg_peso * contaminante["limite_diario"])
 
+
+            reporte_region["personas"] = len(personas)
+            reporte_region["prom_peso"] = avg_peso
+            reporte_region["prom_contaminantes"] = avg_contaminantes
+            reporte_region["formula"] = formula
 
             reporte.append(reporte_region)
 
