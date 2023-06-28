@@ -8,10 +8,10 @@ def reporte():
     if request.method == "POST":
         reporte = []
         request_json = request.get_json()
-        s = ""
+        sexo = ""
         if("sexo" in request_json):
             sexo = request_json["sexo"]
-            s = "sexo = " + str(sexo) + " AND"
+            sexo = "sexo = " + str(sexo) + " AND"
 
         min_edad = request_json["edad"][0]
         max_edad = request_json["edad"][1]
@@ -82,7 +82,7 @@ def reporte():
             
             #print(sql_comunas)
             
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
             personas = {}
