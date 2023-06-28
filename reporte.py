@@ -40,6 +40,28 @@ def reporte():
         
         print(alimentos)
 
+        regiones = []
+        cur.execute("SELECT id FROM Region")
+        res = cur.fetchall()
+        for region in res:
+            regiones.append({"id": region[0]})
+
+        print(regiones)
+
+        sql_alimentos = "Consumo.id_alimento = " + alimentos[0]["id"]
+        for alimentos in alimentos:
+            if(alimento == alimentos[0]): 
+                continue
+            else:
+                sql_alimentos+= " OR Consumo.id_alimento = " + alimento["id"]
+        
+        print(sql_alimentos)
+
+        #for region in regiones:
+            
+            #cur.execute("SELECT p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s;",[min_edad, max_edad, min_peso, max_peso, alimento["id"]])
+
+
         return jsonify(reporte)
     
     elif request.method == "GET":
