@@ -44,8 +44,16 @@ def reporte():
         cur.execute("SELECT id FROM Region")
         res = cur.fetchall()
         for region in res:
-            regiones.append({"id": region[0]})
+            regiones.append({"id": region[0], "comunas": []})
 
+        print(regiones)
+
+        for region in regiones:
+            cur.execute("SELECT id FROM Comuna WHERE id_region =%s",[region["id"]])
+            res = cur.fetchall()
+            for comuna in res:
+                region["comunas"].append(comuna[0])
+    
         print(regiones)
 
         sql_alimentos = "Consumo.id_alimento = " + str(alimentos[0]["id"])
@@ -58,6 +66,7 @@ def reporte():
         print(sql_alimentos)
 
         #for region in regiones:
+            #cur.execute()
             
             #cur.execute("SELECT p.peso, Consumo.cantidad_mes FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.id_alimento=%s;",[min_edad, max_edad, min_peso, max_peso, alimento["id"]])
 
