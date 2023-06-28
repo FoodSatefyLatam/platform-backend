@@ -82,7 +82,7 @@ def reporte():
             
             #print(sql_comunas)
             
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
             personas = {}
@@ -92,7 +92,7 @@ def reporte():
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
-                    personas[consumo[0]] = "ok"
+                    personas[consumo[0]] = consumo[4]
                 for contaminante in contaminantes:
                     alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
                     if not contaminante["nombre"] in avg_contaminantes:
