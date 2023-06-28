@@ -23,7 +23,7 @@ def reporte():
         for contaminante in res:
             contaminantes.append({"id":contaminante[0], "nombre": contaminante[1], "limite_diario": contaminante[2]})
 
-        print(contaminantes)
+        #print(contaminantes)
 
         for alimento in alimentos:
             cur.execute("SELECT id FROM Alimento WHERE nombre = %s",[alimento["nombre"]])
@@ -38,7 +38,7 @@ def reporte():
                 if not contaminante["nombre"] in alimento:
                     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([contaminante["id"]],[alimento["id"]]))
         
-        print(alimentos)
+        #print(alimentos)
 
         regiones = []
         cur.execute("SELECT id FROM Region")
@@ -46,7 +46,7 @@ def reporte():
         for region in res:
             regiones.append({"id": region[0], "comunas": []})
 
-        print(regiones)
+        #print(regiones)
 
         for region in regiones:
             cur.execute("SELECT id FROM Comuna WHERE id_region =%s",[region["id"]])
@@ -54,7 +54,7 @@ def reporte():
             for comuna in res:
                 region["comunas"].append(comuna[0])
     
-        print(regiones)
+        #print(regiones)
 
         sql_alimentos = "Consumo.id_alimento = " + str(alimentos[0]["id"])
         for alimento in alimentos:
@@ -63,7 +63,7 @@ def reporte():
             else:
                 sql_alimentos+= " OR Consumo.id_alimento = " + str(alimento["id"])
         
-        print(sql_alimentos)
+        #print(sql_alimentos)
 
         for region in regiones:
             sql_comunas = "comuna_id = " + str(region["comunas"][0])
@@ -73,9 +73,9 @@ def reporte():
                 else:
                     sql_comunas += " OR comuna_id = " + str(comuna)
             
-            print(sql_comunas)
+            #print(sql_comunas)
             
-            cur.execute("SELECT p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             print(cur.fetchall())
 
 
