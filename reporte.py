@@ -8,10 +8,11 @@ def reporte():
     if request.method == "POST":
         reporte = []
         request_json = request.get_json()
-        sexo = request_json["sexo"]
         s = ""
-        if(sexo != 0):
-            s = "sexo = " + sexo.to_string() - 1 + " AND"
+        if(request_json["sexo"] != None):
+            sexo = request_json["sexo"]
+            s = "sexo = " + sexo.to_string() + " AND"
+
         min_edad = request_json["edad"][0]
         max_edad = request_json["edad"][1]
         min_peso = request_json["peso"][0]
