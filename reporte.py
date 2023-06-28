@@ -9,7 +9,7 @@ def reporte():
         reporte = []
         request_json = request.get_json()
         s = ""
-        if(request_json["sexo"] != None):
+        if("sexo" in request_json):
             sexo = request_json["sexo"]
             s = "sexo = " + str(sexo) + " AND"
 
