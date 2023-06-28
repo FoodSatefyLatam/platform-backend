@@ -21,7 +21,7 @@ def reporte():
         cur.execute("SELECT id, nombre, limite_diario FROM Contaminante")
         res = cur.fetchall()
         for contaminante in res:
-            contaminantes += {"id":res[0], "nombre": res[1], "limite_diario": res[2]} 
+            contaminantes.append({"id":res[0], "nombre": res[1], "limite_diario": res[2]})
 
         print(contaminantes)
 
