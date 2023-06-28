@@ -114,6 +114,7 @@ def reporte():
             reporte_region["prom_peso"] = avg_peso
             reporte_region["prom_contaminantes"] = avg_contaminantes
             reporte_region["formula"] = formula
+            reporte_region["personas"] = personas
 
             reporte.append(reporte_region)
 
