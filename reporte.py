@@ -93,13 +93,13 @@ def reporte():
                 for contaminante in contaminantes:
                     alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
                     print(alimento)
-                    if(alimento[contaminante["nombre"]] == None):
+                    if(alimento[0][contaminante["nombre"]] == None):
                         print("sin datos")
                         continue
                     if not contaminante["nombre"] in avg_contaminantes:
-                        avg_contaminantes[contaminante["nombre"]] = alimento[contaminante["nombre"]]
+                        avg_contaminantes[contaminante["nombre"]] = alimento[0][contaminante["nombre"]]
                     else:
-                        avg_contaminantes[contaminante["nombre"]] += alimento[contaminante["nombre"]]
+                        avg_contaminantes[contaminante["nombre"]] += alimento[0][contaminante["nombre"]]
 
             avg_peso =  avg_peso /len(personas)
                 
