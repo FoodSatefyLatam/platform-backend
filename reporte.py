@@ -6,7 +6,7 @@ from __main__ import app, mysql, request, jsonify
 def reporte():
     cur = mysql.connection.cursor()
     if request.method == "POST":
-        reporte = {}
+        reporte = []
         request_json = request.get_json()
         sexo = request_json["sexo"]
         s = ""
@@ -37,6 +37,8 @@ def reporte():
             for contaminante in contaminantes:
                 if not contaminante["nombre"] in alimento:
                     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([contaminante["id"]],[alimento["id"]]))
+                    res = cur.fetchall()
+                    alimento[contaminante["nombre"] ] = res[0][0]
         
         #print(alimentos)
 
@@ -66,6 +68,7 @@ def reporte():
         #print(sql_alimentos)
 
         for region in regiones:
+            reporte_region = {}
             sql_comunas = "comuna_id = " + str(region["comunas"][0])
             for comuna in region["comunas"]:
                 if(comuna == region["comunas"][0]): 
@@ -75,9 +78,23 @@ def reporte():
             
             #print(sql_comunas)
             
-            cur.execute("SELECT p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
-            print(cur.fetchall())
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
+            res = cur.fetchall()
 
+            personas = {}
+            avg_peso = 0.0
+            avg_contaminantes = {}
+            for consumo in res:
+                if not consumo[0] in personas:
+                    avg_peso += consumo[1]
+                    personas[consumo[0]] = "ok"
+
+                for contaminante in contaminantes:
+
+                
+                
+                
+            reporte.append(reporte_region)
 
         return jsonify(reporte)
     
