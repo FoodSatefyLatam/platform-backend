@@ -75,7 +75,7 @@ def reporte():
             
             print(sql_comunas)
             
-            cur.execute("SELECT AVG(p.peso), AVG(Consumo.cantidad_mes) FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT * FROM Persona WHERE "+ s +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p LEFT JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             print(cur.fetchall())
 
 
