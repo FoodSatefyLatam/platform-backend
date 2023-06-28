@@ -66,12 +66,12 @@ def reporte():
         print(sql_alimentos)
 
         for region in regiones:
-            sql_comunas = "id_comuna = " + str(region["comunas"][0])
+            sql_comunas = "comuna_id = " + str(region["comunas"][0])
             for comuna in region["comunas"]:
                 if(comuna == region["comunas"][0]): 
                     continue
                 else:
-                    sql_comunas += " OR id_comuna = " + str(comuna)
+                    sql_comunas += " OR comuna_id = " + str(comuna)
             
             print(sql_comunas)
             
