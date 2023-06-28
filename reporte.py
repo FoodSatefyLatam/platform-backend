@@ -11,7 +11,7 @@ def reporte():
         s = ""
         if(request_json["sexo"] != None):
             sexo = request_json["sexo"]
-            s = "sexo = " + sexo.to_string() + " AND"
+            s = "sexo = " + str(sexo) + " AND"
 
         min_edad = request_json["edad"][0]
         max_edad = request_json["edad"][1]
