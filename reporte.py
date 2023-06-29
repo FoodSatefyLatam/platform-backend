@@ -167,7 +167,7 @@ def reporte():
 
         n_archivo = datetime.now().strftime("reporte_%d.%m.%Y_%H.%M.%S") + str(random.random())
         reporte["metadata"] = "http://152.74.52.7:5001/reporte/get/" + n_archivo
-        reporte["preview"] = preview
+        #reporte["preview"] = preview
 
         wb.save("data/"+ n_archivo +".xlsx")
         return jsonify(reporte)
