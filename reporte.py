@@ -165,7 +165,7 @@ def reporte():
     
     elif request.method == "GET":
         try:
-            return send_from_directory("data", "dataxlsx", as_attachment=True)
+            return send_from_directory("data", "data.xlsx", as_attachment=True)
         except FileNotFoundError:
             return "ERROR"
         '''
