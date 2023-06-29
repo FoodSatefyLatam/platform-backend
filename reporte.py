@@ -6,7 +6,7 @@ from __main__ import app, mysql, request, jsonify
 def reporte():
     cur = mysql.connection.cursor()
     if request.method == "POST":
-        reporte = {"regiones":[], "chile":{"c_personas":0,"prom_peso":0}}
+        reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
         request_json = request.get_json()
         sexo = ""
         if("sexo" in request_json):
@@ -70,7 +70,6 @@ def reporte():
 
         for region in regiones:
             reporte_region = {
-                "region":region["id"],
                 "c_personas": 0
             }
             sql_comunas = "comuna_id = " + str(region["comunas"][0])
@@ -116,11 +115,15 @@ def reporte():
             reporte_region["prom_contaminantes"] = avg_contaminantes
             reporte_region["formula"] = formula
 
-            reporte["regiones"].append(reporte_region)
+            reporte["regiones"][region["id"]] = reporte_region
             reporte["chile"]["c_personas"] += reporte_region["c_personas"]
             reporte["chile"]["prom_peso"] += avg_peso * reporte_region["c_personas"]
         
         reporte["chile"]["prom_peso"] = reporte["chile"]["prom_peso"] / reporte["chile"]["c_personas"]
+
+        for region in regiones:
+            reporte["regiones"]
+
         return jsonify(reporte)
     
     elif request.method == "GET":
