@@ -97,7 +97,7 @@ def reporte():
             avg_contaminantes = {}
             for consumo in res:
                 alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
-                ws.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],consumo[3]])
+                ws.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
