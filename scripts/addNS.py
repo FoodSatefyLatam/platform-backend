@@ -25,6 +25,6 @@ df_najustado.rename(columns={'       Nivel socioeconómico    ': 'ns'}, inplace=
 sql_persona = "UPDATE Persona SET ns=%s WHERE id = %s;"
 
 for ind in df_najustado.index:
-    cursor.execute(sql_persona.format([df_najustado["ns"][ind], df_najustado["id"][ind]]))
+    cursor.execute(sql_persona, [df_najustado["ns"][ind], str(df_najustado["id"][ind])])
     mydb.commit()
 
