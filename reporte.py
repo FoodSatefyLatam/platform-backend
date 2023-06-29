@@ -81,10 +81,11 @@ def reporte():
             
             #print(sql_comunas)
             
-            print("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p INNER JOIN  Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
+            #print("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p INNER JOIN  Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
             cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT p.id, p.peso from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
+            formula = {}
             personas = {}
             avg_peso = 0.0
             avg_contaminantes = {}
@@ -103,7 +104,7 @@ def reporte():
 
             avg_peso =  avg_peso / reporte_region["c_personas"]
             
-            formula = {}
+            
             for contaminante in contaminantes:
                 avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]]/ reporte_region["c_personas"]
                 if contaminante["limite_diario"] == None:
@@ -121,9 +122,22 @@ def reporte():
         
         reporte["chile"]["prom_peso"] = reporte["chile"]["prom_peso"] / reporte["chile"]["c_personas"]
 
+        formula = {}
+        avg_contaminantes = {}
         for region in regiones:
-            reporte["regiones"]
-
+            for contaminante in contaminantes:
+                avg_contaminantes[contaminante[id]] = reporte["regiones"][region]["prom_contaminantes"][contaminante["nombre"]] * reporte["regiones"][region]["c_personas"]
+        
+        for contaminante in contaminantes:
+            avg_contaminantes[contaminante[id]] = avg_contaminantes[contaminante[id]] / reporte["chile"]["c_personas"]
+            if contaminante["limite_diario"] == None:
+                formula[contaminante["nombre"]] = "Sin Datos de limite diario"
+            else:
+                formula[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / (avg_peso * contaminante["limite_diario"])
+        
+        reporte["chile"]["prom_contaminantes"] = avg_contaminantes
+        reporte["chile"]["formula"] = formula
+        
         return jsonify(reporte)
     
     elif request.method == "GET":
