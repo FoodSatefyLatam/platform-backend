@@ -1,9 +1,12 @@
-import openpyxl
+from openpyxl import Workbook
 
 from __main__ import app, mysql, request, jsonify
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
+    wb = Workbook()
+    ws = wb.active
+    ws.append(["id persona","peso","cantidad mes","alimento"])
     cur = mysql.connection.cursor()
     if request.method == "POST":
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
@@ -91,6 +94,7 @@ def reporte():
             avg_contaminantes = {}
             for consumo in res:
                 alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
+                ws.append([consumo])
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
