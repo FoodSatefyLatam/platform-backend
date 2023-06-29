@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 
-app = Flask(__name__, static_folder='app', static_url_path="/")
+app = Flask(__name__, static_folder='app', static_url_path="/app")
 
 
 @app.route("/heartbeat")
