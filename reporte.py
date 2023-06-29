@@ -1,6 +1,6 @@
 from openpyxl import Workbook
 
-from __main__ import app, mysql, request, jsonify
+from __main__ import app, mysql, request, jsonify, send_from_directory
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
@@ -98,6 +98,8 @@ def reporte():
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
+                    personas[consumo[0]] = "ok"
+                '''
                     personas[consumo[0]] = {
                         "peso": consumo[1],
                         "consumos_mes":{
@@ -106,6 +108,7 @@ def reporte():
                     }
                 else:
                     personas[consumo[0]]["consumos_mes"][alimento[0]["nombre"]] = consumo[2]
+                '''
 
                 for contaminante in contaminantes:
                     
@@ -157,10 +160,15 @@ def reporte():
 
         reporte["metadata"] = personas
 
-        wb.save("data.xlsx")
+        wb.save("data/data.xlsx")
         return jsonify(reporte)
     
     elif request.method == "GET":
+        try:
+            return send_from_directory("data", "dataxlsx", as_attachment=True)
+        except FileNotFoundError:
+            return "ERROR"
+        '''
         respuesta = {}
         nombre_alimentos = {}
         cur.execute("SELECT * FROM Alimento;")
@@ -182,3 +190,4 @@ def reporte():
     
     else:
         return "Error"
+    '''
