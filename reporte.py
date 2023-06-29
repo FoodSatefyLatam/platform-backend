@@ -10,7 +10,7 @@ def reporte():
     random.seed(5)
     wb = Workbook()
     ws = wb.active
-    ws.append(["ID Persona","Sexo","Edad","Altura(cm)","Peso(kg)","Cantidad al mes(g)","Alimento"])
+    ws.append(["ID Persona","Sexo","Nivel socioeconomico","Edad","Altura(cm)","Peso(kg)","Cantidad al mes(g)","Alimento"])
     cur = mysql.connection.cursor()
     if request.method == "POST":
         preview = []
@@ -92,7 +92,7 @@ def reporte():
             #print(sql_comunas)
             
             #print("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p INNER JOIN  Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo, p.edad, p.altura FROM (SELECT p.id, p.peso, p.sexo, p.altura, p.edad from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo, p.edad, p.altura, p.ns FROM (SELECT p.id, p.peso, p.sexo, p.altura, p.edad, p.ns from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
             formula = {}
@@ -101,8 +101,8 @@ def reporte():
             for consumo in res:
                 alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
                 if(len(preview) < 100):
-                    preview.append({"edad":consumo[5],"sexo": _sexo[consumo[4]],"altura": consumo[6], "peso": consumo[1],"alimento": alimento[0]["nombre"],"cantidad consumida": consumo[2]})
-                ws.append([consumo[0],_sexo[consumo[4]],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
+                    preview.append({"edad":consumo[5],"sexo": _sexo[consumo[4]],"ns":consumo[7],"altura": consumo[6], "peso": consumo[1],"alimento": alimento[0]["nombre"],"cantidad consumida": consumo[2]})
+                ws.append([consumo[0],_sexo[consumo[4]],consumo[7],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
