@@ -118,14 +118,14 @@ def reporte():
                 '''
 
                 for contaminante in contaminantes:
-                    
                     if not contaminante["nombre"] in avg_contaminantes:
                         avg_contaminantes[contaminante["nombre"]] = 0.0
                     if(alimento[0][contaminante["nombre"]] == None):
                         continue
                     avg_contaminantes[contaminante["nombre"]] += (alimento[0][contaminante["nombre"]] * consumo[2])/(30*1000)
-
-            avg_peso =  avg_peso / reporte_region["c_personas"]
+            
+            if(reporte_region["c_personas"]!= 0):
+                avg_peso =  avg_peso / reporte_region["c_personas"]
             
             
             for contaminante in contaminantes:
@@ -143,7 +143,8 @@ def reporte():
             reporte["chile"]["c_personas"] += reporte_region["c_personas"]
             reporte["chile"]["prom_peso"] += avg_peso * reporte_region["c_personas"]
         
-        reporte["chile"]["prom_peso"] = reporte["chile"]["prom_peso"] / reporte["chile"]["c_personas"]
+        if(reporte["chile"]["c_personas"]!= 0):
+            reporte["chile"]["prom_peso"] = reporte["chile"]["prom_peso"] / reporte["chile"]["c_personas"]
 
         formula = {}
         avg_contaminantes = {}
