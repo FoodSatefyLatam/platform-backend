@@ -12,6 +12,7 @@ def reporte():
     ws.append(["id persona","sexo","edad","altura","peso","cantidad mes","alimento"])
     cur = mysql.connection.cursor()
     if request.method == "POST":
+        preview = []
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
         request_json = request.get_json()
         sexo = ""
@@ -97,6 +98,8 @@ def reporte():
             avg_contaminantes = {}
             for consumo in res:
                 alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
+                if(len(preview) < 100):
+                    preview.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
                 ws.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
@@ -163,6 +166,7 @@ def reporte():
 
         n_archivo = datetime.now().strftime("reporte_%d.%m.%Y_%H.%M.%S") + str(random.random())
         reporte["metadata"] = n_archivo
+        reporte["preview"] = preview
 
         wb.save("data/"+ n_archivo +".xlsx")
         return jsonify(reporte)
