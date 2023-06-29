@@ -96,7 +96,7 @@ def reporte():
                     avg_peso += consumo[1]
                     personas[consumo[0]] = {
                         "peso": consumo[1],
-                        "alimento": alimento[0]["nomre"],
+                        "alimento": alimento[0]["nombre"],
                         "consumo": consumo[2]
                     }
                 for contaminante in contaminantes:
