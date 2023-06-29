@@ -49,7 +49,6 @@ def reporte():
                     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([contaminante["id"]],[alimento["id"]]))
                     res = cur.fetchall()
                     alimento[contaminante["nombre"]] = res[0][0]
-                    print(alimento["nombre"], alimento[contaminante["nombre"]] )
         
         #print(alimentos)
 
