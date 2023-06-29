@@ -116,12 +116,13 @@ def reporte():
                 else:
                     personas[consumo[0]]["consumos_mes"][alimento[0]["nombre"]] = consumo[2]
                 '''
-                if(consumo[2] != 0):
-                    for contaminante in contaminantes:
-                        if not contaminante["nombre"] in avg_contaminantes:
-                            avg_contaminantes[contaminante["nombre"]] = 0.0
-                        if(alimento[0][contaminante["nombre"]] == None):
-                            continue
+                
+                for contaminante in contaminantes:
+                    if not contaminante["nombre"] in avg_contaminantes:
+                        avg_contaminantes[contaminante["nombre"]] = 0.0
+                    if(alimento[0][contaminante["nombre"]] == None):
+                        continue
+                    if(consumo[2] != 0):
                         avg_contaminantes[contaminante["nombre"]] += (alimento[0][contaminante["nombre"]] * consumo[2])/(30*1000)
             
             if(reporte_region["c_personas"]!= 0):
