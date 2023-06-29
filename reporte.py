@@ -17,9 +17,9 @@ def reporte():
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
         request_json = request.get_json()
         sexo = ""
-        if("sexo" in request_json):
+        if(request_json[sexo] != ["1","0"]):
             sexo = request_json["sexo"]
-            sexo = "sexo = " + str(sexo) + " AND"
+            sexo = "sexo = " + sexo + " AND"
 
         min_edad = request_json["edad"][0]
         max_edad = request_json["edad"][1]
