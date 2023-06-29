@@ -93,7 +93,6 @@ def reporte():
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
-                    personas[consumo[0]] = consumo[4]
                 for contaminante in contaminantes:
                     alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
                     if not contaminante["nombre"] in avg_contaminantes:
