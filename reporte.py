@@ -126,10 +126,9 @@ def reporte():
         avg_contaminantes = {}
         for region in regiones:
             for contaminante in contaminantes:
-                _avg = reporte["regiones"][region["id"]]["prom_contaminantes"][contaminante["nombre"]]
-                _c_p = reporte["regiones"][region["id"]]["c_personas"]
-                avg_contaminantes[contaminante["nombre"]] = _avg * _c_p
+                avg_contaminantes[contaminante["nombre"]] = reporte["regiones"][region["id"]]["prom_contaminantes"][contaminante["nombre"]] * reporte["regiones"][region["id"]]["c_personas"]
 
+        print(avg_contaminantes[contaminante["nombre"]])
         
         for contaminante in contaminantes:
             avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
