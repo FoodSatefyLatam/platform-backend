@@ -118,9 +118,9 @@ def reporte():
 
             reporte["regiones"].append(reporte_region)
             reporte["chile"]["c_personas"] += reporte_region["c_personas"]
-            reporte["chilE"]["prom_peso"] += avg_peso * reporte_region["c_personas"]
+            reporte["chile"]["prom_peso"] += avg_peso * reporte_region["c_personas"]
         
-        reporte["chilE"]["prom_peso"] = reporte["chilE"]["prom_peso"] / reporte["chile"]["c_personas"]
+        reporte["chile"]["prom_peso"] = reporte["chile"]["prom_peso"] / reporte["chile"]["c_personas"]
         return jsonify(reporte)
     
     elif request.method == "GET":
