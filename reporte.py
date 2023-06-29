@@ -1,9 +1,12 @@
 from openpyxl import Workbook
+from datetime import datetime
+import random
 
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
+    random.seed(5)
     wb = Workbook()
     ws = wb.active
     ws.append(["id persona","peso","cantidad mes","alimento"])
@@ -158,14 +161,16 @@ def reporte():
         reporte["chile"]["prom_contaminantes"] = avg_contaminantes
         reporte["chile"]["formula"] = formula
 
-        reporte["metadata"] = personas
+        n_archivo = datetime.now().strftime("Test_%d.%m.%Y_%H.%M.%S") + random.random()
+        reporte["metadata"] = n_archivo
 
-        wb.save("data/data.xlsx")
+        wb.save("data/"+ n_archivo +".xlsx")
         return jsonify(reporte)
     
     elif request.method == "GET":
+        request_json = request.get_json()
         try:
-            return send_from_directory("data", "data.xlsx", as_attachment=True)
+            return send_from_directory("data", request_json["archivo"] + ".xlsx", as_attachment=True)
         except FileNotFoundError:
             return "ERROR"
         '''
