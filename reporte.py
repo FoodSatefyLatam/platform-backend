@@ -99,7 +99,7 @@ def reporte():
             for consumo in res:
                 alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
                 if(len(preview) < 100):
-                    preview.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
+                    preview.append({"edad":consumo[5],"sexo": consumo[4],"altura": consumo[6], "peso": consumo[1],"alimento": alimento[0]["nombre"],"cantidad consumida": consumo[1]})
                 ws.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],alimento[0]["nombre"]])
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
