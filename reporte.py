@@ -172,35 +172,6 @@ def reporte():
         wb.save("data/"+ n_archivo +".xlsx")
         return jsonify(reporte)
     
-    elif request.method == "GET":
-        request_json = request.get_json()
-        try:
-            return send_from_directory("data", request_json["archivo"] + ".xlsx", as_attachment=True)
-        except FileNotFoundError:
-            return "ERROR"
-        '''
-        respuesta = {}
-        nombre_alimentos = {}
-        cur.execute("SELECT * FROM Alimento;")
-        alimentos = cur.fetchall()
-        for alimento in alimentos:
-            nombre_alimentos[alimento[0]] = alimento[1]
-
-        cur.execute("SELECT * FROM Consumo;")
-        consumos = cur.fetchall()
-        for consumo in consumos:
-            if consumo[0] in respuesta:
-                if(consumo[3] != 0.0):
-                    respuesta[consumo[0]][nombre_alimentos[consumo[1]]] = consumo[3]
-            else:
-                respuesta[consumo[0]] = {}
-                if(consumo[3] != 0.0):
-                    respuesta[consumo[0]][nombre_alimentos[consumo[1]]] = consumo[3]
-        return jsonify(respuesta)
-    
-    else:
-        return "Error"
-    '''
 @app.route("/reporte/get/<string:archivo>", methods=["GET", "POST"])
 def get_reporte(archivo):
     try:
