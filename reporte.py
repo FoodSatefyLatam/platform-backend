@@ -45,7 +45,7 @@ def reporte():
                 return "error: alimento " + alimento["nombre"] + " no encontrado."
             
             for contaminante in contaminantes:
-                if not contaminante["nombre"] in alimento:
+                if alimento[contaminante["nombre"]] == None:
                     cur.execute("SELECT Avg(cantidad)  FROM  Muestra WHERE id_contaminante=%s AND id_alimento=%s" ,([contaminante["id"]],[alimento["id"]]))
                     res = cur.fetchall()
                     alimento[contaminante["nombre"] ] = res[0][0]
