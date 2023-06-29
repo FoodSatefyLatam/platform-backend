@@ -161,7 +161,7 @@ def reporte():
         reporte["chile"]["prom_contaminantes"] = avg_contaminantes
         reporte["chile"]["formula"] = formula
 
-        n_archivo = datetime.now().strftime("Test_%d.%m.%Y_%H.%M.%S") + random.random()
+        n_archivo = datetime.now().strftime("Test_%d.%m.%Y_%H.%M.%S") + str(random.random())
         reporte["metadata"] = n_archivo
 
         wb.save("data/"+ n_archivo +".xlsx")
