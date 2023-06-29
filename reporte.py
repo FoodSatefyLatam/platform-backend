@@ -68,6 +68,7 @@ def reporte():
         
         #print(sql_alimentos)
 
+        personas = {}
         for region in regiones:
             reporte_region = {
                 "c_personas": 0
@@ -86,16 +87,20 @@ def reporte():
             res = cur.fetchall()
 
             formula = {}
-            personas = {}
             avg_peso = 0.0
             avg_contaminantes = {}
             for consumo in res:
+                alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
-                    personas[consumo[0]] = "ok"
+                    personas[consumo[0]] = {
+                        "peso": consumo[1],
+                        "alimento": alimento[0]["nomre"],
+                        "consumo": consumo[2]
+                    }
                 for contaminante in contaminantes:
-                    alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
+                    
                     if not contaminante["nombre"] in avg_contaminantes:
                         avg_contaminantes[contaminante["nombre"]] = 0.0
                     if(alimento[0][contaminante["nombre"]] == None):
@@ -141,6 +146,8 @@ def reporte():
         
         reporte["chile"]["prom_contaminantes"] = avg_contaminantes
         reporte["chile"]["formula"] = formula
+
+        reporte["metadata"] = personas
 
         return jsonify(reporte)
     
