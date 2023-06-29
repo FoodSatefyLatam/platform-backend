@@ -201,7 +201,7 @@ def reporte():
     else:
         return "Error"
     '''
-@app.route("/get_reporte/<string:archivo>", methods=["GET", "POST"])
+@app.route("/reporte/get/<string:archivo>", methods=["GET", "POST"])
 def get_reporte(archivo):
     try:
         return send_from_directory("data", archivo + ".xlsx", as_attachment=True)
