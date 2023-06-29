@@ -9,7 +9,7 @@ def reporte():
     random.seed(5)
     wb = Workbook()
     ws = wb.active
-    ws.append(["id persona","peso","cantidad mes","alimento"])
+    ws.append(["id persona","sexo","edad","altura","peso","cantidad mes","alimento"])
     cur = mysql.connection.cursor()
     if request.method == "POST":
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
@@ -89,7 +89,7 @@ def reporte():
             #print(sql_comunas)
             
             #print("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p INNER JOIN  Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento FROM (SELECT p.id, p.peso from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo, p.edad, p.altura FROM (SELECT p.id, p.peso from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
             formula = {}
@@ -97,7 +97,7 @@ def reporte():
             avg_contaminantes = {}
             for consumo in res:
                 alimento = list(filter(lambda _alimento: _alimento['id'] == consumo[3], alimentos))
-                ws.append([consumo[0],consumo[1],consumo[2],consumo[3]])
+                ws.append([consumo[0],consumo[4],consumo[5],consumo[6],consumo[1],consumo[2],consumo[3]])
                 if not consumo[0] in personas:
                     reporte_region["c_personas"] += 1
                     avg_peso += consumo[1]
