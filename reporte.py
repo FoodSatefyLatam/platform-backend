@@ -139,7 +139,7 @@ def reporte():
                     avg_contaminantes[contaminante["nombre"]] = 0.0
                 avg_contaminantes[contaminante["nombre"]] += reporte["regiones"][region["id"]]["prom_contaminantes"][contaminante["nombre"]] * reporte["regiones"][region["id"]]["c_personas"]
 
-        print(avg_contaminantes)
+        #print(avg_contaminantes)
 
         for contaminante in contaminantes:
             avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
