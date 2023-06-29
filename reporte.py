@@ -128,10 +128,10 @@ def reporte():
             for contaminante in contaminantes:
                 _avg = reporte["regiones"][region["id"]]["prom_contaminantes"][contaminante["nombre"]]
                 _c_p = reporte["regiones"][region["id"]]["c_personas"]
-                avg_contaminantes[contaminante[id]] = _avg * _c_p
+                avg_contaminantes[contaminante["id"]] = _avg * _c_p
         
         for contaminante in contaminantes:
-            avg_contaminantes[contaminante[id]] = avg_contaminantes[contaminante[id]] / reporte["chile"]["c_personas"]
+            avg_contaminantes[contaminante["id"]] = avg_contaminantes[contaminante[id]] / reporte["chile"]["c_personas"]
             if contaminante["limite_diario"] == None:
                 formula[contaminante["nombre"]] = "Sin Datos de limite diario"
             else:
