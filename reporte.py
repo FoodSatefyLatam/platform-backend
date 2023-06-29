@@ -127,14 +127,13 @@ def reporte():
             
             if(reporte_region["c_personas"]!= 0):
                 avg_peso =  avg_peso / reporte_region["c_personas"]
-            
-            if reporte_region["c_personas"] != 0:
                 for contaminante in contaminantes:
-                    avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]]/ reporte_region["c_personas"]
                     if contaminante["limite_diario"] == None:
                         formula[contaminante["nombre"]] = "Sin Datos de limite diario"
                     else:
-                        formula[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / (avg_peso * contaminante["limite_diario"])
+                        if reporte_region["c_personas"] != 0:
+                            avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]]/ reporte_region["c_personas"]
+                            formula[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / (avg_peso * contaminante["limite_diario"])
 
             reporte_region["prom_peso"] = avg_peso
             reporte_region["prom_contaminantes"] = avg_contaminantes
@@ -158,9 +157,10 @@ def reporte():
         #print(avg_contaminantes)
 
         for contaminante in contaminantes:
-            avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
             if reporte["chile"]["c_personas"] == 0:
+                formula[contaminante["nombre"]] = "Sin datos de consumo"
                 continue
+            avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
             if contaminante["limite_diario"] == None:
                 formula[contaminante["nombre"]] = "Sin Datos de limite diario"
             else:
