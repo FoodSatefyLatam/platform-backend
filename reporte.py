@@ -17,7 +17,7 @@ def reporte():
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
         request_json = request.get_json()
         sexo = ""
-        if(request_json[sexo] != ["1","0"]):
+        if(request_json["sexo"] != ["1","0"]):
             sexo = request_json["sexo"]
             sexo = "sexo = " + sexo + " AND"
 
