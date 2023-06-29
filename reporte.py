@@ -116,7 +116,7 @@ def reporte():
             reporte_region["prom_contaminantes"] = avg_contaminantes
             reporte_region["formula"] = formula
 
-            reporte[regiones].append(reporte_region)
+            reporte["regiones"].append(reporte_region)
             reporte["chile"]["c_personas"] += reporte_region["c_personas"]
             reporte["chilE"]["prom_peso"] += avg_peso * reporte_region["c_personas"]
         
