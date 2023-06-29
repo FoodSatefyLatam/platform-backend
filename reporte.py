@@ -26,7 +26,7 @@ def reporte():
         min_peso = request_json["peso"][0]
         max_peso = request_json["peso"][1]
         alimentos = request_json.get("alimentos")
-        print(alimentos)
+        #print(alimentos)
         contaminantes = []
         cur.execute("SELECT id, nombre, limite_diario FROM Contaminante")
         res = cur.fetchall()
