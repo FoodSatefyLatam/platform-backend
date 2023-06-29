@@ -91,7 +91,7 @@ def reporte():
             #print(sql_comunas)
             
             #print("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo FROM (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s AND " + sql_comunas + " ) AS p INNER JOIN  Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[min_edad, max_edad, min_peso, max_peso])
-            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo, p.edad, p.altura FROM (SELECT p.id, p.peso, p.sexo, p.altura, p.edad from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE Consumo.cantidad_mes != 0.0 AND "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
+            cur.execute("SELECT p.id, p.peso, Consumo.cantidad_mes, Consumo.id_alimento, p.sexo, p.edad, p.altura FROM (SELECT p.id, p.peso, p.sexo, p.altura, p.edad from (SELECT * FROM Comuna WHERE id_region = %s) as r JOIN (SELECT * FROM Persona WHERE "+ sexo +" edad > %s AND edad < %s AND peso > %s AND peso < %s)  as p ON p.comuna_id = r.id) as p JOIN Consumo ON p.id = Consumo.id_persona WHERE "+ sql_alimentos + ";",[region["id"],min_edad, max_edad, min_peso, max_peso])
             res = cur.fetchall()
 
             formula = {}
