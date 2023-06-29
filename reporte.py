@@ -157,9 +157,9 @@ def reporte():
         #print(avg_contaminantes)
 
         for contaminante in contaminantes:
+            avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
             if reporte["chile"]["c_personas"] == 0:
                 continue
-            avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
             if contaminante["limite_diario"] == None:
                 formula[contaminante["nombre"]] = "Sin Datos de limite diario"
             else:
