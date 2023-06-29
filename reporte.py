@@ -128,8 +128,8 @@ def reporte():
             for contaminante in contaminantes:
                 avg_contaminantes[contaminante["nombre"]] = reporte["regiones"][region["id"]]["prom_contaminantes"][contaminante["nombre"]] * reporte["regiones"][region["id"]]["c_personas"]
 
-        print(avg_contaminantes[contaminante["nombre"]])
-        
+        print(avg_contaminantes)
+
         for contaminante in contaminantes:
             avg_contaminantes[contaminante["nombre"]] = avg_contaminantes[contaminante["nombre"]] / reporte["chile"]["c_personas"]
             if contaminante["limite_diario"] == None:
