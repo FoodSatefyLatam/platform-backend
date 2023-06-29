@@ -157,6 +157,7 @@ def reporte():
 
         reporte["metadata"] = personas
 
+        wb.save("data.xlsx")
         return jsonify(reporte)
     
     elif request.method == "GET":
