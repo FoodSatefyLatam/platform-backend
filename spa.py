@@ -7,6 +7,7 @@ def heartbeat():
     return jsonify({"status": "healthy"})
 
 @app.route('/', defaults={'path': ''})
+@app.route('/home', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
     return app.send_static_file("index.html")
