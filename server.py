@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import os
+from jose import jwt
 
 app = Flask(__name__)
 CORS(app)
