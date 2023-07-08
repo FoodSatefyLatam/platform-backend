@@ -2,7 +2,9 @@ from openpyxl import Workbook
 from datetime import datetime
 import random
 
-from __main__ import app, mysql, request, jsonify, send_from_directory
+from __main__ import app, mysql, request, jsonify, send_from_directory, verificar_sesion
+
+verificar_s
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
@@ -12,6 +14,8 @@ def reporte():
     ws = wb.active
     ws.append(["ID Persona","Sexo","Nivel socioeconomico","Edad","Altura(cm)","Peso(kg)","Cantidad al mes(g)","Alimento"])
     cur = mysql.connection.cursor()
+    if not verificar_sesion( request.headers.get("Authorization")):
+        return jsonify({"status": "unauthorized"})
     if request.method == "POST":
         preview = []
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
