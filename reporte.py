@@ -7,6 +7,8 @@ from jose import jwt
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
 def verificar_token_auth0(token):
+    if(token == None):
+        return False
     # Clave secreta utilizada para verificar la firma del token
     clave_secreta = "tCi8d3N-zbQMvPsjqdNkWZ-zUFQYsL632oxDoH1pb7BENo3cihfFCznY6YokJs0f"
 
@@ -39,7 +41,7 @@ def reporte():
     ws = wb.active
     ws.append(["ID Persona","Sexo","Nivel socioeconomico","Edad","Altura(cm)","Peso(kg)","Cantidad al mes(g)","Alimento"])
     cur = mysql.connection.cursor()
-    if not verificar_token_auth0( request.headers.get("Authorization")):
+    if not verificar_token_auth0(request.headers.get("Authorization")):
         return jsonify({"status": "unauthorized"})
     if request.method == "POST":
         preview = []
