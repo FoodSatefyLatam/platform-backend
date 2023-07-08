@@ -1,27 +1,34 @@
 from openpyxl import Workbook
 from datetime import datetime
 import random
+import requests
 
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
-def verificar_sesion(sesion_key):
-    # Define la clave secreta utilizada para verificar la sesión
-    clave_secreta = "tu_clave_secreta_de_auth0"
+def verificar_token_auth0(token):
+    # Clave secreta utilizada para verificar la firma del token
+    #clave_secreta = "https://dev-rqvixarr0an3cp4y.us.auth0.com/api/v2/"
 
     try:
-        # Verifica y decodifica la sesión utilizando la clave secreta
-        datos_sesion = jwt.decode(sesion_key, clave_secreta, algorithms=['HS256'])
-        # Si la verificación es exitosa, devuelve los datos de la sesión
-        return True
+        # Verificar la firma del token JWT
+        #datos_sesion = jwt.decode(token, clave_secreta, algorithms=['HS256'])
+
+        # Validar el token con Auth0
+        url = "https://dev-rqvixarr0an3cp4y.us.auth0.com/api/v2/"
+        headers = {"Authorization": f"Bearer {token}"}
+
+        response = requests.post(url, headers=headers)
+        if response.status_code == 200:
+            datos_usuario = response.json()
+            return datos_usuario
+        else:
+            return False
     except jwt.ExpiredSignatureError:
-        # La sesión ha expirado
+        # El token ha expirado
         return False
     except jwt.JWTError:
-        # Error en la verificación de la sesión
+        # Error en la verificación de la firma del token
         return False
-
-    # Si la verificación falla, devuelve None
-    return False
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
