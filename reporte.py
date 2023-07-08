@@ -38,7 +38,7 @@ def reporte():
     ws = wb.active
     ws.append(["ID Persona","Sexo","Nivel socioeconomico","Edad","Altura(cm)","Peso(kg)","Cantidad al mes(g)","Alimento"])
     cur = mysql.connection.cursor()
-    if not verificar_sesion( request.headers.get("Authorization")):
+    if not verificar_token_auth0( request.headers.get("Authorization")):
         return jsonify({"status": "unauthorized"})
     if request.method == "POST":
         preview = []
