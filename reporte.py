@@ -7,14 +7,14 @@ from __main__ import app, mysql, request, jsonify, send_from_directory
 
 def verificar_token_auth0(token):
     # Clave secreta utilizada para verificar la firma del token
-    #clave_secreta = "https://dev-rqvixarr0an3cp4y.us.auth0.com/api/v2/"
+    clave_secreta = "tCi8d3N-zbQMvPsjqdNkWZ-zUFQYsL632oxDoH1pb7BENo3cihfFCznY6YokJs0f"
 
     try:
         # Verificar la firma del token JWT
-        #datos_sesion = jwt.decode(token, clave_secreta, algorithms=['HS256'])
+        datos_sesion = jwt.decode(token, clave_secreta, algorithms=['HS256'])
 
         # Validar el token con Auth0
-        url = "https://dev-rqvixarr0an3cp4y.us.auth0.com/api/v2/"
+        url = "https://dev-rqvixarr0an3cp4y.us.auth0.com/"
         headers = {"Authorization": f"Bearer {token}"}
 
         response = requests.post(url, headers=headers)
