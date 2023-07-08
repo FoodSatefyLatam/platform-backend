@@ -27,9 +27,11 @@ def verificar_token_auth0(token):
         else:
             return False
     except jwt.ExpiredSignatureError:
+        print("El token ha expirado")
         # El token ha expirado
         return False
     except jwt.JWTError:
+        print("Error en la verificación de la firma del token")
         # Error en la verificación de la firma del token
         return False
 
