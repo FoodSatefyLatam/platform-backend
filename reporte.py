@@ -10,30 +10,37 @@ def verificar_token_auth0(token):
     if(token == None):
         return False
     # Clave secreta utilizada para verificar la firma del token
-    clave_secreta = "tCi8d3N-zbQMvPsjqdNkWZ-zUFQYsL632oxDoH1pb7BENo3cihfFCznY6YokJs0f"
+    json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
+    jwks = requests.get(json_url).json()
+    unverified_header = jwt.get_unverified_header(token)
 
-    try:
-        # Verificar la firma del token JWT
-        datos_sesion = jwt.decode(token, clave_secreta, algorithms=['HS256'])
-
-        # Validar el token con Auth0
-        url = "https://dev-rqvixarr0an3cp4y.us.auth0.com/"
-        headers = {"Authorization": f"Bearer {token}"}
-
-        response = requests.post(url, headers=headers)
-        if response.status_code == 200:
-            datos_usuario = response.json()
-            return datos_usuario
-        else:
+    rsa_key = {}
+    for key in jwks['keys']:
+        if key['kid'] == unverified_header['kid']:
+            rsa_key = {
+                'kty': key['kty'],
+                'kid': key['kid'],
+                'use': key['use'],
+                'n': key['n'],
+                'e': key['e'],
+            }
+    if rsa_key:
+        try:
+            # Verificar la firma del token JWT
+            jwt.decode(
+                token,
+                rsa_key,
+                algorithms = jwks['alg'],
+                audience = 'OpenCRA-Api',
+                issuer = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/',
+            )
+            return True
+        except jwt.ExpiredSignatureError:
             return False
-    except jwt.ExpiredSignatureError:
-        print("El token ha expirado")
-        # El token ha expirado
-        return False
-    except jwt.JWTError:
-        print("Error en la verificación de la firma del token")
-        # Error en la verificación de la firma del token
-        return False
+        except jwt.JWTClaimsError:
+            return False
+        except Exception as e:
+            return False
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
