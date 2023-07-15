@@ -225,7 +225,7 @@ def reporte():
         wb.save("data/"+ n_archivo +".xlsx")
         return jsonify(reporte)
     
-@app.route("/reporte/get/<string:archivo>", methods=["GET", "POST"])
+@app.route("/reporte/get/<string:archivo>", methods=["GET"])
 def get_reporte(archivo):
     if not verificar_token_auth0(request.headers.get("Authorization")):
         return jsonify({"status": "unauthorized"})
