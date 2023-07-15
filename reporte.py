@@ -6,7 +6,8 @@ from jose import jwt
 
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
-def verificar_token_auth0(token):
+def verificar_token_auth0(token): 
+    token = token.split(" ")[1]
     if(token == None):
         return False
     # Clave secreta utilizada para verificar la firma del token
