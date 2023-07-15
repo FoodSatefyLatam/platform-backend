@@ -29,8 +29,8 @@ class Auth0JWTBearerTokenValidator(JWTBearerTokenValidator):
 require_auth = ResourceProtector()
 
 validator = Auth0JWTBearerTokenValidator(
-    "{yourDomain}",
-    "{yourApiIdentifier}"
+    "dev-rqvixarr0an3cp4y.us.auth0.com",
+    "OpenCRA-Api"
 )
 
 require_auth.register_token_validator(validator)
