@@ -10,10 +10,13 @@ def verificar_token_auth0(token):
     if(token == None):
         return False
     # Clave secreta utilizada para verificar la firma del token
-    json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
+
+    # Obtener datos de autenticación desde Auth0
+    json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json' 
     jwks = requests.get(json_url).json()
     unverified_header = jwt.get_unverified_header(token)
 
+    # Elegir nuestra clave RSA desde el conjunto de claves proporcionadas por Auth0
     rsa_key = {}
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
@@ -30,11 +33,13 @@ def verificar_token_auth0(token):
             decoded_token = jwt.decode(
                 token,
                 rsa_key,
-                algorithms = jwks['alg'],
-                audience = 'OpenCRA-Api',
-                issuer = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/',
+                algorithms = jwks['alg'], # Algoritmo de encriptación
+                audience = 'OpenCRA-Api', # Identificador de audiencia
+                issuer = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/', # Identificador de emisor
             )
             print(decoded_token)
+            if(decoded_token["exp"] < datetime.now().timestamp()): # Verificar que el token no haya expirado
+                return False
             return True
         except jwt.ExpiredSignatureError:
             return False
