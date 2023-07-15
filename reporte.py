@@ -4,8 +4,9 @@ import random
 import requests
 import jwt
 
-from __main__ import app, mysql, request, jsonify, send_from_directory
+from __main__ import app, mysql, request, jsonify, send_from_directory, require_auth
 
+'''
 def verificar_token_auth0(token):
     if(len(token.split(" ")) < 2):
         return False
@@ -58,8 +59,10 @@ def verificar_token_auth0(token):
             return False
     else:
         return False
+'''
 
 @app.route("/reporte", methods=["GET", "POST"])
+@require_auth(None)
 def reporte():
     _sexo = ["HOMBRE","MUJER"]
     random.seed(5)
@@ -67,8 +70,8 @@ def reporte():
     ws = wb.active
     ws.append(["ID Persona","Sexo","Nivel socioeconomico","Edad","Altura(cm)","Peso(kg)","Cantidad al mes(g)","Alimento"])
     cur = mysql.connection.cursor()
-    if not verificar_token_auth0(request.headers.get("Authorization")):
-        return jsonify({"status": "unauthorized"})
+    #if not verificar_token_auth0(request.headers.get("Authorization")):
+    #    return jsonify({"status": "unauthorized"})
     if request.method == "POST":
         preview = []
         reporte = {"regiones": {}, "chile":{"c_personas":0,"prom_peso":0}}
@@ -235,9 +238,10 @@ def reporte():
         return jsonify(reporte)
     
 @app.route("/reporte/get/<string:archivo>", methods=["GET"])
+@require_auth(None)
 def get_reporte(archivo):
-    if not verificar_token_auth0(request.headers.get("Authorization")):
-        return jsonify({"status": "unauthorized"})
+    #if not verificar_token_auth0(request.headers.get("Authorization")):
+    #    return jsonify({"status": "unauthorized"})
     try:
         return send_from_directory("data", archivo + ".xlsx", as_attachment=True)
     except FileNotFoundError:
