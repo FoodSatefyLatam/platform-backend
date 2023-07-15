@@ -2,7 +2,7 @@ from openpyxl import Workbook
 from datetime import datetime
 import random
 import requests
-from jose import jwt
+import jwt
 
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
