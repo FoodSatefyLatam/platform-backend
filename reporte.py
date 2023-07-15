@@ -227,6 +227,8 @@ def reporte():
     
 @app.route("/reporte/get/<string:archivo>", methods=["GET", "POST"])
 def get_reporte(archivo):
+    if not verificar_token_auth0(request.headers.get("Authorization")):
+        return jsonify({"status": "unauthorized"})
     try:
         return send_from_directory("data", archivo + ".xlsx", as_attachment=True)
     except FileNotFoundError:
