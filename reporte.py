@@ -21,6 +21,8 @@ def verificar_token_auth0(token):
     jwks = requests.get(json_url).json()
     unverified_header = jwt.get_unverified_header(token)
 
+    print(unverified_header)
+
     # Elegir nuestra clave RSA desde el conjunto de claves proporcionadas por Auth0
     rsa_key = {}
     for key in jwks['keys']:
