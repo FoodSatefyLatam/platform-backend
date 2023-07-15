@@ -46,7 +46,6 @@ def verificar_token_auth0(token):
         except jwt.JWTClaimsError:
             return False
         except Exception as e:
-            print(e)
             return False
 
 @app.route("/reporte", methods=["GET", "POST"])
