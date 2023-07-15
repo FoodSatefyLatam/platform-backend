@@ -15,13 +15,10 @@ def verificar_token_auth0(token):
     json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
     algorithms = ['RS256'] # Algoritmo de encriptación
     jwks = requests.get(json_url).json()
-    #unverified_header = jwt.get_unverified_header(token)
 
     # Elegir nuestra clave RSA desde el conjunto de claves proporcionadas por Auth0
     rsa_key = {}
-    
     for key in jwks['keys']:
-        #if key['kid'] == unverified_header['kid']:
         rsa_key = {
             'kty': key['kty'],
             'kid': key['kid'],
@@ -48,8 +45,9 @@ def verificar_token_auth0(token):
         except jwt.JWTClaimsError:
             return False
         except Exception as e:
-            print(e)
             return False
+    else:
+        return False
 
 @app.route("/reporte", methods=["GET", "POST"])
 def reporte():
