@@ -13,7 +13,7 @@ def verificar_token_auth0(token):
 
     # Obtener datos de autenticación desde Auth0
     json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
-    algorithms = ['RS256'] # Algoritmo de encriptación
+    algorithms = []
     jwks = requests.get(json_url).json()
 
     # Elegir nuestra clave RSA desde el conjunto de claves proporcionadas por Auth0
@@ -24,9 +24,9 @@ def verificar_token_auth0(token):
             'kid': key['kid'],
             'use': key['use'],
             'n': key['n'],
-            'e': key['e'],
-            'alg': key['alg']
+            'e': key['e']
         }
+        algorithms += [key['alg']]
     if rsa_key:
         try:
             # Verificar la firma del token JWT
