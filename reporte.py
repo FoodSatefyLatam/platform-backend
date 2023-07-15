@@ -16,7 +16,7 @@ def verificar_token_auth0(token):
     # Clave secreta utilizada para verificar la firma del token
 
     # Obtener datos de autenticación desde Auth0
-    json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
+    json_url = 'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
     algorithms = ['RS256']
     jwks = requests.get(json_url).json()
     unverified_header = jwt.get_unverified_header(token)
@@ -43,7 +43,7 @@ def verificar_token_auth0(token):
                 rsa_key,
                 algorithms = algorithms, # Algoritmo de encriptación
                 audience = 'OpenCRA-Api', # Identificador de audiencia
-                issuer = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/', # Identificador de emisor
+                issuer = 'https://dev-rqvixarr0an3cp4y.us.auth0.com/', # Identificador de emisor
             )
             print(decoded_token)
             if(decoded_token["exp"] < datetime.now().timestamp()): # Verificar que el token no haya expirado
