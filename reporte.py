@@ -27,13 +27,14 @@ def verificar_token_auth0(token):
     if rsa_key:
         try:
             # Verificar la firma del token JWT
-            jwt.decode(
+            decoded_token = jwt.decode(
                 token,
                 rsa_key,
                 algorithms = jwks['alg'],
                 audience = 'OpenCRA-Api',
                 issuer = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/',
             )
+            print(decoded_token)
             return True
         except jwt.ExpiredSignatureError:
             return False
