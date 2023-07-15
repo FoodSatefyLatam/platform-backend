@@ -7,7 +7,7 @@ import jwt
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
 def verificar_token_auth0(token):
-    if(token.split(" ").length < 2):
+    if(len(token.split(" ")) < 2):
         return False
     print(token)
     token = token.split(" ")[1]
