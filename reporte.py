@@ -7,6 +7,8 @@ from jose import jwt
 from __main__ import app, mysql, request, jsonify, send_from_directory
 
 def verificar_token_auth0(token):
+    if(token == "Bearer"):
+        return False
     print(token)
     token = token.split(" ")[1]
     if(token == None):
@@ -15,7 +17,7 @@ def verificar_token_auth0(token):
 
     # Obtener datos de autenticación desde Auth0
     json_url = f'https://dev-rqvixarr0an3cp4y.us.auth0.com/.well-known/jwks.json'
-    algorithms = ['RS256', 'RS256']
+    algorithms = ['RS256']
     jwks = requests.get(json_url).json()
     unverified_header = jwt.get_unverified_header(token)
 
