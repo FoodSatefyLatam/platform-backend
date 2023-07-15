@@ -25,6 +25,7 @@ def verificar_token_auth0(token):
             'use': key['use'],
             'n': key['n'],
             'e': key['e'],
+            'alg': key['alg']
         }
     if rsa_key:
         try:
