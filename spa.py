@@ -2,6 +2,9 @@ from flask import Flask, jsonify
 
 app = Flask(__name__, static_folder='../dist')
 
+app.add_url_rule('/dist/assets/<path:filename>', 'js', build_only=True)
+app.wsgi_app.add_file_handler('/dist/assets/', 'js')
+
 @app.route("/heartbeat")
 def heartbeat():
     return jsonify({"status": "healthy"})
